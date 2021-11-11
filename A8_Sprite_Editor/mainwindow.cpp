@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setMouseTracking(true); // E.g. set in your constructor of your widget.
-    ui->pushButton->setMouseTracking(true);
 }
 
 MainWindow::~MainWindow()

@@ -16,5 +16,5 @@ void Sprite::setPixel(int x, int y, const QColor &color)
 
 QImage Sprite::getImage()
 {
-    return *currSprite;
+    return currSprite->scaled(1000,1000,Qt::KeepAspectRatio);
 }
