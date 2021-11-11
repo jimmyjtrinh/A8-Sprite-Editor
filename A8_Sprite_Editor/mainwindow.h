@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "sprite.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,7 +16,20 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
+private slots:
+    void mouseMoveEvent(QMouseEvent *event);
+
+
+    void on_pushButton_pressed();
+
 private:
     Ui::MainWindow *ui;
+
+    //for testing purposes ONLY PLS REMOVE I BEG OF U
+    Sprite sprite;
+
+
+
 };
 #endif // MAINWINDOW_H
