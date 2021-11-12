@@ -15,27 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     setMouseTracking(true);
 
 
-    //ui->label->setPixmap(QPixmap::fromImage(sprite.getImage()));
-       QPixmap pixmap(QPixmap::fromImage(sprite.getImage()).scaled(512, 512, Qt::KeepAspectRatio));
-       QPainter painter(&pixmap);
-
-       painter.setPen(QColor(255, 255, 255, 200));
-
-       //vertical lines
-       for(float x = 0; x <= pixmap.width(); x+=pixmap.width()/32){
-           painter.drawLine(x, 0, x, pixmap.height());
-       }
-
-       //horizontal lines
-       for(float y = 0; y <= pixmap.height(); y+=pixmap.height()/32){
-           painter.drawLine(0, y, pixmap.width(), y);
-       }
-
-       ui->label->setPixmap(pixmap);
-
-
-//   ui->centralwidget->setMouseTracking(true);
-//     ui->label->setMouseTracking(true);
+   ui->centralwidget->setMouseTracking(true);
+     ui->label->setMouseTracking(true);
 
 
 
@@ -76,8 +57,25 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
              //cout <<relativeXPosOfImage << " " << relativeYPosOfImage<< endl;
              cout << xInPixelSPace<< " "<< yInPixelSPace<< endl;
              QColor red(255,0,0,255);
-                 sprite.setPixel(xInPixelSPace, yInPixelSPace, red);
-                 ui->label->setPixmap(QPixmap::fromImage(sprite.getImage()));}
+             sprite.setPixel(xInPixelSPace, yInPixelSPace, red);
+
+                QPixmap pixmap(QPixmap::fromImage(sprite.getImage()).scaled(512, 512, Qt::KeepAspectRatio));
+                QPainter painter(&pixmap);
+
+                painter.setPen(QColor(255, 255, 255, 200));
+
+                //vertical lines
+                for(float x = 0; x <= pixmap.width(); x+=pixmap.width()/32){
+                    painter.drawLine(x, 0, x, pixmap.height());
+                }
+
+                //horizontal lines
+                for(float y = 0; y <= pixmap.height(); y+=pixmap.height()/32){
+                    painter.drawLine(0, y, pixmap.width(), y);
+                }
+
+                ui->label->setPixmap(pixmap);
+        }
 }
 
 
@@ -85,23 +83,23 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
 void MainWindow::on_pushButton_pressed()
 {
 
-//    //ui->label->setPixmap(QPixmap::fromImage(sprite.getImage()));
-//       QPixmap pixmap(QPixmap::fromImage(sprite.getImage()).scaled(512, 512, Qt::KeepAspectRatio));
-//       QPainter painter(&pixmap);
+    //ui->label->setPixmap(QPixmap::fromImage(sprite.getImage()));
+       QPixmap pixmap(QPixmap::fromImage(sprite.getImage()).scaled(512, 512, Qt::KeepAspectRatio));
+       QPainter painter(&pixmap);
 
-//       painter.setPen(QColor(255, 255, 255, 200));
+       painter.setPen(QColor(255, 255, 255, 200));
 
-//       //vertical lines
-//       for(float x = 0; x <= pixmap.width(); x+=pixmap.width()/32){
-//           painter.drawLine(x, 0, x, pixmap.height());
-//       }
+       //vertical lines
+       for(float x = 0; x <= pixmap.width(); x+=pixmap.width()/32){
+           painter.drawLine(x, 0, x, pixmap.height());
+       }
 
-//       //horizontal lines
-//       for(float y = 0; y <= pixmap.height(); y+=pixmap.height()/32){
-//           painter.drawLine(0, y, pixmap.width(), y);
-//       }
+       //horizontal lines
+       for(float y = 0; y <= pixmap.height(); y+=pixmap.height()/32){
+           painter.drawLine(0, y, pixmap.width(), y);
+       }
 
-//       ui->label->setPixmap(pixmap);
+       ui->label->setPixmap(pixmap);
 
     //ui->label->setPixmap(QPixmap::fromImage(sprite.getImage()));
 }
