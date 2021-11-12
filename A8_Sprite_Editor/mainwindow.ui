@@ -30,10 +30,10 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>407</x>
-      <y>46</y>
-      <width>256</width>
-      <height>256</height>
+      <x>140</x>
+      <y>10</y>
+      <width>512</width>
+      <height>512</height>
      </rect>
     </property>
     <property name="minimumSize">
@@ -53,7 +53,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>24</height>
+     <height>33</height>
     </rect>
    </property>
   </widget>
