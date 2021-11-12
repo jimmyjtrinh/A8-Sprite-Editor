@@ -1,11 +1,22 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <QObject>
+#include <QMouseEvent>
 
-class Model
+class Model : public QObject
 {
+    Q_OBJECT
 public:
-    Model();
+    explicit Model(QObject *parent = nullptr);
+
+public slots:
+
+signals:
+    void updateDrawing(int, int, QColor);
+
 };
+
+
 
 #endif // MODEL_H

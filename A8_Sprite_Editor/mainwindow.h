@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "sprite.h"
+#include "model.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,8 +26,12 @@ private slots:
 
     void on_pushButton_pressed();
 
+signals:
+   //void sendCoordAndColor();
+
 private:
     Ui::MainWindow *ui;
+    Model modelObj;
 
     //for testing purposes ONLY PLS REMOVE I BEG OF U
     Sprite sprite;
