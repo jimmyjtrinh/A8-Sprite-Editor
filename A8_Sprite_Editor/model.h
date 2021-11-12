@@ -1,19 +1,20 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <QObject>
-#include <QMouseEvent>
 
-class Model : public QObject
+class Model
 {
-    Q_OBJECT
 public:
-    explicit Model(QObject *parent = nullptr);
+    Model();
 
-public slots:
+//public slots:
+//    void mouseMoveEvent(QMouseEvent *event);
+//    void mousePressEvent(QMouseEvent *event);
+//    void mouseReleaseEvent(QMouseEvent *event);
 
-signals:
-    void updateDrawing(int, int, QColor);
+
+//    void on_pushButton_pressed();
+
 
 };
 

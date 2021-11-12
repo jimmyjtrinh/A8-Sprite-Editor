@@ -27,7 +27,7 @@
      <string>PushButton</string>
     </property>
    </widget>
-   <widget class="QLabel" name="canvasLabel">
+   <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -43,10 +43,7 @@
      </size>
     </property>
     <property name="text">
-     <string>canvas label</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <string>TextLabel</string>
     </property>
    </widget>
   </widget>

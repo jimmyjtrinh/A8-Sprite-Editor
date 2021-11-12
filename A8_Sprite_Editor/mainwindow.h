@@ -26,9 +26,6 @@ private slots:
 
     void on_pushButton_pressed();
 
-signals:
-   //void sendCoordAndColor();
-
 private:
     Ui::MainWindow *ui;
     Model modelObj;
