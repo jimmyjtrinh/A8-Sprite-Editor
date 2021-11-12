@@ -21,16 +21,26 @@ MainWindow::~MainWindow()
 
 
 
-// Implement in your widget
+/*!
+ * \brief MainWindow::mouseMoveEvent Event that is "activated" any time mouse is drag clicked
+ * sends x and y to model to be used to draw
+ * \param event
+ */
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
-//    qDebug() << event->pos();
-   // if (event->pos().x()-ui->label->x()<(ui->label->width()))
-        // if(ui->label->y()-event->pos().y()>0)
-    int subX = event->pos().x()-ui->label->x();
-    int subY = event->pos().y()-ui->label->y();
-    if(subX>=0 && subX<(ui->label->width()))
-        if(subY>=0 && subY<(ui->label->height()))
-    cout <<subX << " " << subY<< endl;
+    // relative position of x and y of picture (0 to 255) values
+    double relativeXPosOfImage = event->pos().x()-ui->label->x();
+    double relativeYPosOfImage = event->pos().y()-ui->label->y();
+    // scale used to transform (256 * 256 image coords to 31 * 31 coords)
+    double scale = 31.0/255.0;
+    // 0 - 31 pixle range that corresponds to what was clicked on image
+    int xInPixelSPace =  relativeXPosOfImage*scale;
+    int yInPixelSPace =  relativeYPosOfImage*scale;
+    // in image range check
+    if(relativeXPosOfImage >= 0 && relativeXPosOfImage < (ui->label->width()))
+        if(relativeYPosOfImage>=0 && relativeYPosOfImage<(ui->label->height())){
+            // send x and y pixel space to draw  - draw here
+             cout <<relativeXPosOfImage << " " << relativeYPosOfImage<< endl;
+             cout << xInPixelSPace<< " "<< yInPixelSPace<< endl;}
 }
 
 
