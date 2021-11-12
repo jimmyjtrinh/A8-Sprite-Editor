@@ -24,8 +24,6 @@ private slots:
     void mouseReleaseEvent(QMouseEvent *event);
 
 
-    void on_pushButton_pressed();
-
 private:
     Ui::MainWindow *ui;
     Model modelObj;
@@ -33,6 +31,10 @@ private:
     //for testing purposes ONLY PLS REMOVE I BEG OF U
     Sprite sprite;
     bool pressed;
+
+    int spriteDimensions = 32;
+
+    void makeGrid(int);
 
 
 

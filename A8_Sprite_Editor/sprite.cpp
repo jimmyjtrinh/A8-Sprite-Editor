@@ -3,7 +3,7 @@
 Sprite::Sprite()
 {
     currSprite = new QImage(32, 32, QImage::Format_RGBA64);
-    QColor blank(0,0,0,255);
+    QColor blank(0,0,0,0);
     currSprite->fill(blank);
 }
 
