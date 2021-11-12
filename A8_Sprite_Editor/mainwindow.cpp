@@ -20,11 +20,19 @@ MainWindow::~MainWindow()
 }
 
 
+
 // Implement in your widget
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
 //    qDebug() << event->pos();
-    cout << event->pos().x() << " " << event->pos().y() << endl;
+   // if (event->pos().x()-ui->label->x()<(ui->label->width()))
+        // if(ui->label->y()-event->pos().y()>0)
+    int subX = event->pos().x()-ui->label->x();
+    int subY = event->pos().y()-ui->label->y();
+    if(subX>=0 && subX<(ui->label->width()))
+        if(subY>=0 && subY<(ui->label->height()))
+    cout <<subX << " " << subY<< endl;
 }
+
 
 
 
