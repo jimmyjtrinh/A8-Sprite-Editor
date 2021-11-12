@@ -13,10 +13,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setMouseTracking(true);
-
-
-   ui->centralwidget->setMouseTracking(true);
-     ui->label->setMouseTracking(true);
+    ui->centralwidget->setMouseTracking(true);
+    ui->label->setMouseTracking(true);
 
 
 
@@ -56,26 +54,72 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
             // send x and y pixel space to draw  - draw here
              //cout <<relativeXPosOfImage << " " << relativeYPosOfImage<< endl;
              cout << xInPixelSPace<< " "<< yInPixelSPace<< endl;
-             QColor red(255,0,0,255);
-             sprite.setPixel(xInPixelSPace, yInPixelSPace, red);
 
-                QPixmap pixmap(QPixmap::fromImage(sprite.getImage()).scaled(512, 512, Qt::KeepAspectRatio));
-                QPainter painter(&pixmap);
+             if(pressed){
+                 QColor red(255,0,0,255);
+                  sprite.setPixel(xInPixelSPace, yInPixelSPace, red);
 
-                painter.setPen(QColor(255, 255, 255, 200));
+                     QPixmap pixmap(QPixmap::fromImage(sprite.getImage()).scaled(512, 512, Qt::KeepAspectRatio));
+                     QPainter painter(&pixmap);
 
-                //vertical lines
-                for(float x = 0; x <= pixmap.width(); x+=pixmap.width()/32){
-                    painter.drawLine(x, 0, x, pixmap.height());
-                }
+                     painter.setPen(QColor(255, 255, 255, 200));
 
-                //horizontal lines
-                for(float y = 0; y <= pixmap.height(); y+=pixmap.height()/32){
-                    painter.drawLine(0, y, pixmap.width(), y);
-                }
+                     //vertical lines
+                     for(float x = 0; x <= pixmap.width(); x+=pixmap.width()/32){
+                         painter.drawLine(x, 0, x, pixmap.height());
+                     }
 
-                ui->label->setPixmap(pixmap);
+                     //horizontal lines
+                     for(float y = 0; y <= pixmap.height(); y+=pixmap.height()/32){
+                         painter.drawLine(0, y, pixmap.width(), y);
+                     }
+
+                     ui->label->setPixmap(pixmap);
+             }
         }
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event){
+//    // relative position of x and y of picture (0 to 255) values
+//    double relativeXPosOfImage = event->pos().x()-ui->label->x();
+//    double relativeYPosOfImage = event->pos().y()-ui->label->y();
+//    // scale used to transform (256 * 256 image coords to 31 * 31 coords)
+//    double scale = 32.0/512.0;
+//    // 0 - 31 pixle range that corresponds to what was clicked on image
+//    int xInPixelSPace =  relativeXPosOfImage*scale;
+//    int yInPixelSPace =  relativeYPosOfImage*scale;
+
+//    // in image range check
+//    if(relativeXPosOfImage >= 0 && relativeXPosOfImage < (ui->label->width()))
+//        if(relativeYPosOfImage>=0 && relativeYPosOfImage<(ui->label->height())){
+//            // send x and y pixel space to draw  - draw here
+//             //cout <<relativeXPosOfImage << " " << relativeYPosOfImage<< endl;
+//             cout << xInPixelSPace<< " "<< yInPixelSPace<< endl;
+//             QColor red(255,0,0,255);
+//             sprite.setPixel(xInPixelSPace, yInPixelSPace, red);
+
+//                QPixmap pixmap(QPixmap::fromImage(sprite.getImage()).scaled(512, 512, Qt::KeepAspectRatio));
+//                QPainter painter(&pixmap);
+
+//                painter.setPen(QColor(255, 255, 255, 200));
+
+//                //vertical lines
+//                for(float x = 0; x <= pixmap.width(); x+=pixmap.width()/32){
+//                    painter.drawLine(x, 0, x, pixmap.height());
+//                }
+
+//                //horizontal lines
+//                for(float y = 0; y <= pixmap.height(); y+=pixmap.height()/32){
+//                    painter.drawLine(0, y, pixmap.width(), y);
+//                }
+
+//                ui->label->setPixmap(pixmap);
+//        }
+    pressed = true;
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event){
+    pressed = false;
 }
 
 

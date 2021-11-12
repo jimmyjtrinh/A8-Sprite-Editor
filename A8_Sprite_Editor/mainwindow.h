@@ -19,6 +19,8 @@ public:
 
 private slots:
     void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 
     void on_pushButton_pressed();
@@ -28,6 +30,7 @@ private:
 
     //for testing purposes ONLY PLS REMOVE I BEG OF U
     Sprite sprite;
+    bool pressed;
 
 
 
