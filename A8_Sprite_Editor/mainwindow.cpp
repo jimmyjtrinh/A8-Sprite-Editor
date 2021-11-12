@@ -38,7 +38,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
 
 
     // scale used to transform (256 * 256 image coords to 31 * 31 coords)
-    double scale = spriteDimensions/512.0;
+    double scale = spriteDimensions/513.0;
     // 0 - 31 pixle range that corresponds to what was clicked on image
     int xInPixelSPace =  relativeXPosOfImage*scale;
     int yInPixelSPace =  relativeYPosOfImage*scale;
