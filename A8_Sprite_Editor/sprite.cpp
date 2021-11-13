@@ -7,6 +7,11 @@ Sprite::Sprite()
     currSprite->fill(blank);
 }
 
+Sprite::~Sprite()
+{
+    delete currSprite;
+}
+
 void Sprite::setPixel(int x, int y, const QColor &color)
 {
     currSprite->setPixelColor(x,y,color);

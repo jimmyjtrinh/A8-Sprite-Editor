@@ -34,7 +34,11 @@ private:
 
     int spriteDimensions = 32;
 
-    void makeGrid(int);
+//    void makeGrid(int);
+signals:
+    void updateGrid();
+    void updatePixel(double, double, QColor);
+    void updateCoords(double, double);
 
 
 

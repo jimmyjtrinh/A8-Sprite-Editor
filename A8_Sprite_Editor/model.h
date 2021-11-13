@@ -1,23 +1,53 @@
+/*
+ * Jimmy Trinh && Jacob Day
+ * Software Practice II, CS 3505
+ * A6: Qt Simon Game
+ */
 #ifndef MODEL_H
 #define MODEL_H
 
+#include <QObject>
+#include <stdlib.h>
+#include <QQueue>
+#include <QTimer>
+#include <QPixmap>
+#include <QPainter>
+#include "sprite.h"
 
-class Model
+using std::rand;
+
+class Model : public QObject
 {
+    Q_OBJECT
 public:
-    Model();
+    explicit Model(QObject *parent = nullptr);
 
-//public slots:
-//    void mouseMoveEvent(QMouseEvent *event);
-//    void mousePressEvent(QMouseEvent *event);
-//    void mouseReleaseEvent(QMouseEvent *event);
+//used with the view
+public slots:
+
+    void showBlue(); //changes blue button to light blue
+
+    void updatePixmap();
+    void updateSprite(double, double, QColor);
+    void getCoords(double, double);
+
+//internal model slots
+private slots:
 
 
-//    void on_pushButton_pressed();
+signals:
+
+    void blueSignal(QString);
+    void sendPixmap(QPixmap);
+    void sendCoords(QString);
 
 
+private:
+
+    Sprite sprite;
+    int spriteDimensions = 32;
+
+    void makeGrid(int);
 };
-
-
 
 #endif // MODEL_H
