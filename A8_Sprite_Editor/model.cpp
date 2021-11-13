@@ -44,7 +44,7 @@ void Model::getCoords(double x, double y){
     int xInPixelSpace =  x*scale;
     int yInPixelSpace =  y*scale;
 
-    emit sendCoords(QString::number(xInPixelSpace) + "        " + (QString::number(yInPixelSpace)));
+    emit sendCoords("x: "+QString::number(xInPixelSpace) + "  y: " + (QString::number(yInPixelSpace)));
 }
 
 
