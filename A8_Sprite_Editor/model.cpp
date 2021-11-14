@@ -4,14 +4,20 @@
  * A6: Qt Simon Game
  */
 #include "model.h"
+#include <iostream>
 
+using namespace std;
 /**
  * @brief Model::Model Constructor for our model class
  * @param parent
  */
 Model::Model(QObject *parent) : QObject(parent)
 {
+//    spriteDimensions = 32;
 
+//    // scale used to transform (256 * 256 image coords to 31 * 31 coords)
+//    scale = spriteDimensions/513.0;
+//    sprite = Sprite();
 }
 
 /**
@@ -22,14 +28,21 @@ void Model::showBlue(){
 //    timer.singleShot(delay - 200, this, &Model::stopShowingBlue);
 }
 
+void Model::getDimensions(int dim)
+{
+    cout << "got dimesions " << dim << endl;
+    spriteDimensions = dim;
+    scale = spriteDimensions/513.0;
+    sprite = Sprite(dim);
+    cout << "set up sprite" << endl;
+}
+
 void Model::updatePixmap(){
     makeGrid(513);
 }
 
 void Model::updateSprite(double x, double y, QColor color)
 {
-    // scale used to transform (256 * 256 image coords to 31 * 31 coords)
-    double scale = spriteDimensions/513.0;
     // 0 - 31 pixle range that corresponds to what was clicked on image
     int xInPixelSpace =  x*scale;
     int yInPixelSpace =  y*scale;
@@ -39,7 +52,6 @@ void Model::updateSprite(double x, double y, QColor color)
 
 void Model::getCoords(double x, double y){
 
-    double scale = spriteDimensions/513.0;
     // 0 - 31 pixle range that corresponds to what was clicked on image
     int xInPixelSpace =  x*scale;
     int yInPixelSpace =  y*scale;
@@ -50,6 +62,7 @@ void Model::getCoords(double x, double y){
 
 
 void Model::makeGrid(int canvasSize){
+    cout << "got to make grid" << endl;
     QPixmap pixmap(QPixmap::fromImage(sprite.getImage()).scaled(canvasSize, canvasSize, Qt::KeepAspectRatio));
     QPainter painter(&pixmap);
 

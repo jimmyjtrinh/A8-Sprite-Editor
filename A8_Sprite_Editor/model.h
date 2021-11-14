@@ -30,6 +30,7 @@ public slots:
     void updatePixmap();
     void updateSprite(double, double, QColor);
     void getCoords(double, double);
+    void getDimensions(int);
 
 //internal model slots
 private slots:
@@ -45,7 +46,8 @@ signals:
 private:
 
     Sprite sprite;
-    int spriteDimensions = 32;
+    int spriteDimensions;
+    double scale;
 
     void makeGrid(int);
 };

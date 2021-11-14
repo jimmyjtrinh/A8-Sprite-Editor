@@ -12,15 +12,18 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     model.cpp \
+    prompt.cpp \
     sprite.cpp
 
 HEADERS += \
     mainwindow.h \
     model.h \
+    prompt.h \
     sprite.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    prompt.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

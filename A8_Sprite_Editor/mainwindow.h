@@ -6,6 +6,7 @@
 #include "model.h"
 #include <QColorDialog>
 #include <QColor>
+#include "prompt.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,6 +26,8 @@ private slots:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
+    void openWindow(int);
+
 
     void on_colorButton_clicked();
 
@@ -35,6 +38,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Model modelObj;
+    Prompt startingPrompt;
 
     //for testing purposes ONLY PLS REMOVE I BEG OF U
     Sprite sprite;

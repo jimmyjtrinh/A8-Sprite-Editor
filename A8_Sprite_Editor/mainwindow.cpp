@@ -13,9 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    setMouseTracking(true);
-    ui->centralwidget->setMouseTracking(true);
-    ui->label->setMouseTracking(true);
+    setMouseTracking(false);
+    ui->centralwidget->setMouseTracking(false);
+    ui->label->setMouseTracking(false);
 
     //Model to View
     connect(&modelObj, &Model::sendPixmap, ui->label, &QLabel::setPixmap);
@@ -26,8 +26,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::updatePixel, &modelObj, &Model::updateSprite);
     connect(this, &MainWindow::updateCoords, &modelObj, &Model::getCoords);
 
+
+    connect(&startingPrompt, &Prompt::startApp, &modelObj, &Model::getDimensions);
+    connect(&startingPrompt, &Prompt::startApp, this, &MainWindow::openWindow);
+
     pressed = false;
-    emit updateGrid();
+//    emit updateGrid();
     relativeXPosOfImage = 0;
     relativeYPosOfImage = 0;
 
@@ -43,11 +47,26 @@ MainWindow::MainWindow(QWidget *parent)
     colorPreview = QPixmap(1,1);
     colorPreview.fill(color);
     ui->colorPreview->setPixmap(colorPreview.scaled(ui->colorPreview->width(),ui->colorPreview->height(),Qt::IgnoreAspectRatio));
+
+    startingPrompt.show();
+    this->hide();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::openWindow(int x)
+{
+    this->show();
+    startingPrompt.hide();
+    emit updateGrid();
+    setMouseTracking(true);
+    ui->centralwidget->setMouseTracking(true);
+    ui->label->setMouseTracking(true);
+    cout << "emited grid" << endl;
 }
 
 /*!
