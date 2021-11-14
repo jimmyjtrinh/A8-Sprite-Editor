@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>640</height>
+    <width>469</width>
+    <height>445</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>469</width>
+    <height>445</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>469</width>
+    <height>445</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -16,8 +28,8 @@
   <widget class="QComboBox" name="comboBox">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>160</y>
+     <x>200</x>
+     <y>180</y>
      <width>65</width>
      <height>22</height>
     </rect>
@@ -54,10 +66,10 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>270</y>
-     <width>80</width>
-     <height>22</height>
+     <x>190</x>
+     <y>210</y>
+     <width>81</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -67,9 +79,9 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>150</x>
      <y>50</y>
-     <width>161</width>
+     <width>231</width>
      <height>31</height>
     </rect>
    </property>
