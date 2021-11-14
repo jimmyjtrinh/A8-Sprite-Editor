@@ -31,6 +31,11 @@ MainWindow::MainWindow(QWidget *parent)
     relativeXPosOfImage = 0;
     relativeYPosOfImage = 0;
 
+    selectedColor = QColor(255,0,0,255);
+    currColor = &selectedColor;
+    ERASER = QColor(0,0,0,0);
+
+
 
     color = QColor(255, 0, 0, 255);
     backupColor = color;
@@ -66,7 +71,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
 }
 
 void MainWindow::update(){
-    emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, color);
+    emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, *currColor);
     emit updateGrid();
 }
 
@@ -89,11 +94,13 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event){
 
 void MainWindow::on_colorButton_clicked()
 {
-                                        //default color, parent
-    color = QColorDialog::getColor(QColor(255, 0, 0, 255), this);
-    backupColor = color;
+    QColor temp = QColorDialog::getColor(QColor(255,0,0,255), this);
+    if(temp.isValid())
+        {
+            selectedColor = temp;
+        }
 
-    colorPreview.fill(color);
+    colorPreview.fill(selectedColor);
     ui->colorPreview->setPixmap(colorPreview.scaled(ui->colorPreview->width(),ui->colorPreview->height(),Qt::IgnoreAspectRatio));
 }
 
@@ -107,9 +114,9 @@ void MainWindow::on_colorButton_clicked()
 void MainWindow::on_eraserButton_toggled(bool checked)
 {
     if (checked){
-        color = QColor(0, 0, 0, 0);
+        currColor = &ERASER;
     } else {
-        color = backupColor;
+        currColor = &selectedColor;
     }
 }
 

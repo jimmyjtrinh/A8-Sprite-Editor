@@ -45,6 +45,12 @@ private:
     QPixmap colorPreview;
 
     int spriteDimensions = 32;
+
+    QColor* currColor;
+    QColor selectedColor;
+    QColor ERASER;
+
+
     QColor color;
     QColor backupColor;
 
