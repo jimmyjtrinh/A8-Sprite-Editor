@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QPainter>
 
+
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -16,15 +17,20 @@ MainWindow::MainWindow(QWidget *parent)
     ui->centralwidget->setMouseTracking(true);
     ui->label->setMouseTracking(true);
 
+    //Model to View
     connect(&modelObj, &Model::sendPixmap, ui->label, &QLabel::setPixmap);
     connect(&modelObj, &Model::sendCoords, ui->coordLabel, &QLabel::setText);
 
+    //View to Model
     connect(this, &MainWindow::updateGrid, &modelObj, &Model::updatePixmap);
     connect(this, &MainWindow::updatePixel, &modelObj, &Model::updateSprite);
     connect(this, &MainWindow::updateCoords, &modelObj, &Model::getCoords);
 
     pressed = false;
     emit updateGrid();
+
+
+    color = QColor(255, 0, 0, 255);
 }
 
 MainWindow::~MainWindow()
@@ -48,9 +54,9 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
             // send x and y pixel space to draw  - draw here
              if(pressed){
 
-                 QColor red(255,0,0,255); // model concern???
+                // QColor red(255,0,0,255); // model concern???
 
-                  emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, red);
+                  emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, color);
 
                   emit updateGrid();
              }
@@ -66,5 +72,23 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event){
     pressed = false;
+}
+
+
+void MainWindow::on_colorButton_clicked()
+{
+                                        //default color, parent
+    color = QColorDialog::getColor(QColor(255, 0, 0, 255), this);
+
+    //check if color is valid
+//    if(color.isValid()){
+
+//    }
+}
+
+
+void MainWindow::on_eraserButton_clicked()
+{
+    color = QColor(0, 0, 0, 0);
 }
 

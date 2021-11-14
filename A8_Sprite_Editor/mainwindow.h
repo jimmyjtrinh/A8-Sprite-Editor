@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "sprite.h"
 #include "model.h"
+#include <QColorDialog>
+#include <QColor>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,6 +26,10 @@ private slots:
     void mouseReleaseEvent(QMouseEvent *event);
 
 
+    void on_colorButton_clicked();
+
+    void on_eraserButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Model modelObj;
@@ -33,6 +39,7 @@ private:
     bool pressed;
 
     int spriteDimensions = 32;
+    QColor color;
 
 //    void makeGrid(int);
 signals:
