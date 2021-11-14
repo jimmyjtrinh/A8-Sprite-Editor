@@ -28,7 +28,9 @@ private slots:
 
     void on_colorButton_clicked();
 
-    void on_eraserButton_clicked();
+ //   void on_eraserButton_clicked();
+
+    void on_eraserButton_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
@@ -38,8 +40,17 @@ private:
     Sprite sprite;
     bool pressed;
 
+    double relativeXPosOfImage;
+    double relativeYPosOfImage;
+    QPixmap colorPreview;
+
     int spriteDimensions = 32;
     QColor color;
+    QColor backupColor;
+
+    bool isInCanvas();
+    void update();
+
 
 //    void makeGrid(int);
 signals:

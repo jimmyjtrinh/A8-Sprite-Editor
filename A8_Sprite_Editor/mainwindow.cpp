@@ -28,9 +28,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     pressed = false;
     emit updateGrid();
+    relativeXPosOfImage = 0;
+    relativeYPosOfImage = 0;
 
 
     color = QColor(255, 0, 0, 255);
+    backupColor = color;
+
+    colorPreview = QPixmap(1,1);
+    colorPreview.fill(color);
+    ui->colorPreview->setPixmap(colorPreview.scaled(ui->colorPreview->width(),ui->colorPreview->height(),Qt::IgnoreAspectRatio));
 }
 
 MainWindow::~MainWindow()
@@ -45,29 +52,34 @@ MainWindow::~MainWindow()
  */
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
     // relative position of x and y of picture (0 to 255) values
-    double relativeXPosOfImage = event->pos().x()-ui->label->x();
-    double relativeYPosOfImage = event->pos().y()-ui->label->y() - ui->menubar->height();
+    relativeXPosOfImage = event->pos().x()-ui->label->x();
+    relativeYPosOfImage = event->pos().y()-ui->label->y() - ui->menubar->height();
 
-    // in image range check
-    if(relativeXPosOfImage >= 0 && relativeXPosOfImage < (ui->label->width()))
-        if(relativeYPosOfImage>=0 && relativeYPosOfImage<(ui->label->height())){
-            // send x and y pixel space to draw  - draw here
-             if(pressed){
+    if (isInCanvas()){
+        if(pressed){
 
-                // QColor red(255,0,0,255); // model concern???
-
-                  emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, color);
-
-                  emit updateGrid();
-             }
-
-             emit updateCoords(relativeXPosOfImage, relativeYPosOfImage);
-
+           // QColor red(255,0,0,255); // model concern???
+           update();
         }
+        emit updateCoords(relativeXPosOfImage, relativeYPosOfImage);
+    }
+}
+
+void MainWindow::update(){
+    emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, color);
+    emit updateGrid();
+}
+
+bool MainWindow::isInCanvas(){
+    return relativeXPosOfImage >= 0 && relativeXPosOfImage < (ui->label->width()) && relativeYPosOfImage>=0 && relativeYPosOfImage<(ui->label->height());
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event){
+    if (isInCanvas()){
+        update();
+    }
     pressed = true;
+
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event){
@@ -79,16 +91,25 @@ void MainWindow::on_colorButton_clicked()
 {
                                         //default color, parent
     color = QColorDialog::getColor(QColor(255, 0, 0, 255), this);
+    backupColor = color;
 
-    //check if color is valid
-//    if(color.isValid()){
-
-//    }
+    colorPreview.fill(color);
+    ui->colorPreview->setPixmap(colorPreview.scaled(ui->colorPreview->width(),ui->colorPreview->height(),Qt::IgnoreAspectRatio));
 }
 
 
-void MainWindow::on_eraserButton_clicked()
+//void MainWindow::on_eraserButton_clicked()
+//{
+//    color = QColor(0, 0, 0, 0);
+//}
+
+
+void MainWindow::on_eraserButton_toggled(bool checked)
 {
-    color = QColor(0, 0, 0, 0);
+    if (checked){
+        color = QColor(0, 0, 0, 0);
+    } else {
+        color = backupColor;
+    }
 }
 
