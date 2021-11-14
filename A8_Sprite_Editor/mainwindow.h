@@ -35,6 +35,12 @@ private slots:
 
     void on_eraserButton_toggled(bool checked);
 
+
+
+    void on_addNewFrameButton_clicked();
+
+    void on_speedSlider_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     Model modelObj;
@@ -67,6 +73,8 @@ signals:
     void updateGrid();
     void updatePixel(double, double, QColor);
     void updateCoords(double, double);
+    void addNewSprite();
+    void changeFps(int);
 
 
 

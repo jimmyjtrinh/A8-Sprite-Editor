@@ -13,11 +13,16 @@ using namespace std;
  */
 Model::Model(QObject *parent) : QObject(parent)
 {
-//    spriteDimensions = 32;
+    //    spriteDimensions = 32;
 
-//    // scale used to transform (256 * 256 image coords to 31 * 31 coords)
-//    scale = spriteDimensions/513.0;
-//    sprite = Sprite();
+    //    // scale used to transform (256 * 256 image coords to 31 * 31 coords)
+    //    scale = spriteDimensions/513.0;
+    //    sprite = Sprite();
+
+fps =1;
+
+
+
 }
 
 /**
@@ -25,8 +30,19 @@ Model::Model(QObject *parent) : QObject(parent)
  */
 void Model::showBlue(){
     emit blueSignal("Blue siganl working good :)");
-//    timer.singleShot(delay - 200, this, &Model::stopShowingBlue);
+    //    timer.singleShot(delay - 200, this, &Model::stopShowingBlue);
 }
+
+void Model::createNewSprite(){
+    Sprite temp = Sprite(spriteDimensions);
+    sprite = temp;
+    sprites.push_back(temp);
+    currentIndexOfSprites++;
+
+    updatePixmap();
+
+}
+
 
 void Model::getDimensions(int dim)
 {
@@ -35,6 +51,12 @@ void Model::getDimensions(int dim)
     scale = spriteDimensions/513.0;
     sprite = Sprite(dim);
     cout << "set up sprite" << endl;
+
+
+
+    sprites.push_back(sprite);
+    currentIndexOfSprites = 0;
+
 }
 
 void Model::updatePixmap(){
@@ -81,3 +103,8 @@ void Model::makeGrid(int canvasSize){
     emit sendPixmap(pixmap);
 }
 
+
+void Model::setFps(int i){
+    fps = i;
+    cout<<fps<<endl;
+}

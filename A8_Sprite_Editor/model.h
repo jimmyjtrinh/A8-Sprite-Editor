@@ -31,6 +31,8 @@ public slots:
     void updateSprite(double, double, QColor);
     void getCoords(double, double);
     void getDimensions(int);
+    void createNewSprite();
+    void setFps(int);
 
 //internal model slots
 private slots:
@@ -44,10 +46,13 @@ signals:
 
 
 private:
-
+    int fps;
+    QVector<Sprite> sprites;
+    int currentIndexOfSprites;
     Sprite sprite;
     int spriteDimensions;
     double scale;
+
 
     void makeGrid(int);
 };

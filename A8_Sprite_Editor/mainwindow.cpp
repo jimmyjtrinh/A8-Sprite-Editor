@@ -21,10 +21,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&modelObj, &Model::sendPixmap, ui->label, &QLabel::setPixmap);
     connect(&modelObj, &Model::sendCoords, ui->coordLabel, &QLabel::setText);
 
+
     //View to Model
     connect(this, &MainWindow::updateGrid, &modelObj, &Model::updatePixmap);
     connect(this, &MainWindow::updatePixel, &modelObj, &Model::updateSprite);
     connect(this, &MainWindow::updateCoords, &modelObj, &Model::getCoords);
+     connect(this, &MainWindow::addNewSprite, &modelObj, &Model::createNewSprite);
+     connect(this, &MainWindow::changeFps, &modelObj, &Model::setFps);
 
 
     connect(&startingPrompt, &Prompt::startApp, &modelObj, &Model::getDimensions);
@@ -137,5 +140,17 @@ void MainWindow::on_eraserButton_toggled(bool checked)
     } else {
         currColor = &selectedColor;
     }
+}
+
+
+void MainWindow::on_addNewFrameButton_clicked()
+{
+    emit addNewSprite();
+}
+
+
+void MainWindow::on_speedSlider_valueChanged(int value)
+{
+    emit changeFps(value);
 }
 
