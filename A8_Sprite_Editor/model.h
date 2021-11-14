@@ -13,6 +13,7 @@
 #include <QPixmap>
 #include <QPainter>
 #include "sprite.h"
+#include <QTimer>
 
 using std::rand;
 
@@ -42,16 +43,20 @@ signals:
 
     void blueSignal(QString);
     void sendPixmap(QPixmap);
+    void sendAnimationPreviewPixmap(QPixmap);
     void sendCoords(QString);
 
 
 private:
     int fps;
+    int currentAnimatedSpriteIndex;
     QVector<Sprite> sprites;
     int currentIndexOfSprites;
     Sprite sprite;
     int spriteDimensions;
     double scale;
+    void runAnimation();
+    void sendIndexedSprite();
 
 
     void makeGrid(int);

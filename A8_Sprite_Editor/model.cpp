@@ -19,7 +19,7 @@ Model::Model(QObject *parent) : QObject(parent)
     //    scale = spriteDimensions/513.0;
     //    sprite = Sprite();
 
-fps =1;
+    fps =1;
 
 
 
@@ -35,8 +35,9 @@ void Model::showBlue(){
 
 void Model::createNewSprite(){
     Sprite temp = Sprite(spriteDimensions);
+
+    sprites.push_back(sprite);
     sprite = temp;
-    sprites.push_back(temp);
     currentIndexOfSprites++;
 
     updatePixmap();
@@ -54,7 +55,7 @@ void Model::getDimensions(int dim)
 
 
 
-    sprites.push_back(sprite);
+   // sprites.push_back(sprite);
     currentIndexOfSprites = 0;
 
 }
@@ -106,5 +107,23 @@ void Model::makeGrid(int canvasSize){
 
 void Model::setFps(int i){
     fps = i;
-    cout<<fps<<endl;
+ //   runAnimation(); - broken need to fix way adding in sprites to model array
 }
+
+void Model::runAnimation(){
+
+        for(int i = 0; i<sprites.length(); i++){
+            currentAnimatedSpriteIndex = i;
+            QTimer::singleShot((1000*i)/fps, this, &Model::sendIndexedSprite);
+
+
+    }
+}
+
+void Model::sendIndexedSprite(){
+
+    emit sendAnimationPreviewPixmap(QPixmap::fromImage(sprites[currentAnimatedSpriteIndex].currSprite).scaled(128, 128, Qt::KeepAspectRatio));
+}
+
+
+

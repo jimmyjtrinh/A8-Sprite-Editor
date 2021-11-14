@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     //Model to View
     connect(&modelObj, &Model::sendPixmap, ui->label, &QLabel::setPixmap);
     connect(&modelObj, &Model::sendCoords, ui->coordLabel, &QLabel::setText);
+    connect(&modelObj, &Model::sendAnimationPreviewPixmap, ui->previewImageLabel, &QLabel::setPixmap);
 
 
     //View to Model
