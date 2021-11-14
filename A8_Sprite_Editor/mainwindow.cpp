@@ -46,7 +46,7 @@ MainWindow::~MainWindow()
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
     // relative position of x and y of picture (0 to 255) values
     double relativeXPosOfImage = event->pos().x()-ui->label->x();
-    double relativeYPosOfImage = event->pos().y()-ui->label->y();
+    double relativeYPosOfImage = event->pos().y()-ui->label->y() - ui->menubar->height();
 
     // in image range check
     if(relativeXPosOfImage >= 0 && relativeXPosOfImage < (ui->label->width()))
