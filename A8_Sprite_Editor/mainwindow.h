@@ -7,6 +7,8 @@
 #include <QColorDialog>
 #include <QColor>
 #include "prompt.h"
+#include <QVBoxLayout>
+#include <QLayout>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -41,6 +43,8 @@ private slots:
 
     void on_speedSlider_valueChanged(int value);
 
+    void addWidgetToScrollBar(QLabel*);
+
 private:
     Ui::MainWindow *ui;
     Model modelObj;
@@ -67,8 +71,10 @@ private:
     bool isInCanvas();
     void update();
 
+    QVBoxLayout* boxLayout;
+    QWidget* container;
 
-//    void makeGrid(int);
+
 signals:
     void updateGrid();
     void updatePixel(double, double, QColor);

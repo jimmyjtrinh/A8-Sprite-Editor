@@ -27,6 +27,8 @@ Model::Model(QObject *parent) : QObject(parent)
 }
 
 void Model::createNewSprite(){
+    setListPreview();
+
     Sprite temp = Sprite(spriteDimensions);
     sprites.remove(currentIndexOfSprites - 1);
     sprites.push_back(new Sprite(sprite));
@@ -111,6 +113,12 @@ void Model::sendIndexedSprite(){
         emit sendAnimationPreviewPixmap(QPixmap::fromImage(sprites[currentAnimatedSpriteIndex++]->currSprite).scaled(128, 128, Qt::KeepAspectRatio));
     if(currentAnimatedSpriteIndex>=sprites.length())
         currentAnimatedSpriteIndex = 0;
+}
+
+void Model::setListPreview(){
+    QLabel *temp = new QLabel();
+    temp->setPixmap(QPixmap::fromImage(sprite.getImage().scaled(64, 64, Qt::KeepAspectRatio)));
+    emit sendLabel(temp);
 }
 
 

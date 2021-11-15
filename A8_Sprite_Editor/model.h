@@ -14,6 +14,7 @@
 #include <QPainter>
 #include "sprite.h"
 #include <QTimer>
+#include <QLabel>
 
 using std::rand;
 
@@ -34,6 +35,7 @@ public slots:
     void createNewSprite();
     void setFps(int);
 
+
 //internal model slots
 private slots:
 
@@ -43,6 +45,7 @@ signals:
     void sendPixmap(QPixmap);
     void sendAnimationPreviewPixmap(QPixmap);
     void sendCoords(QString);
+    void sendLabel(QLabel*);
 
 
 private:
@@ -56,6 +59,8 @@ private:
     QTimer *timer;
 
     void sendIndexedSprite();
+
+    void setListPreview();
 
     void makeGrid(int);
 

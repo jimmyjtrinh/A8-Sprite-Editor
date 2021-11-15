@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&modelObj, &Model::sendPixmap, ui->label, &QLabel::setPixmap);
     connect(&modelObj, &Model::sendCoords, ui->coordLabel, &QLabel::setText);
     connect(&modelObj, &Model::sendAnimationPreviewPixmap, ui->previewImageLabel, &QLabel::setPixmap);
+    connect(&modelObj, &Model::sendLabel, this, &MainWindow::addWidgetToScrollBar);
+
 
 
     //View to Model
@@ -56,7 +58,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->hide();
 
 
-
+    container = new QWidget();
+    boxLayout = new QVBoxLayout();
+    ui->allSpriteThumbnails->setAlignment(Qt::AlignTop);
 }
 
 MainWindow::~MainWindow()
@@ -156,5 +160,14 @@ void MainWindow::on_addNewFrameButton_clicked()
 void MainWindow::on_speedSlider_valueChanged(int value)
 {
     emit changeFps(value);
+}
+
+void MainWindow::addWidgetToScrollBar(QLabel* lab){
+//    QLabel* temp = new QLabel;
+//    temp->setText("asdfasdfasdf");
+
+    boxLayout->addWidget(lab);
+    container->setLayout(boxLayout);
+    ui->allSpriteThumbnails->setWidget(container);
 }
 
