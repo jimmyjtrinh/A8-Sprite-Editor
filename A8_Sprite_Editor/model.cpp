@@ -111,7 +111,7 @@ void Model::sendIndexedSprite(){
 
 void Model::setListPreview(){
     QLabel *temp = new QLabel();
-    temp->setPixmap(QPixmap::fromImage(sprite.getImage().scaled(64, 64, Qt::KeepAspectRatio)));
+    temp->setPixmap(QPixmap::fromImage(sprite.getImage().scaled(83, 83, Qt::KeepAspectRatio)));
     emit sendLabel(temp);
 }
 
