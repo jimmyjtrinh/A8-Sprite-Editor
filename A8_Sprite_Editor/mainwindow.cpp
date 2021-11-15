@@ -33,11 +33,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::changeFps, &modelObj, &Model::setFps);
 
 
+
     connect(&startingPrompt, &Prompt::startApp, &modelObj, &Model::getDimensions);
     connect(&startingPrompt, &Prompt::startApp, this, &MainWindow::openWindow);
 
     pressed = false;
-//    emit updateGrid();
     relativeXPosOfImage = 0;
     relativeYPosOfImage = 0;
 
@@ -77,7 +77,6 @@ void MainWindow::openWindow(int x)
     setMouseTracking(true);
     ui->centralwidget->setMouseTracking(true);
     ui->label->setMouseTracking(true);
-    cout << "emited grid" << endl;
 }
 
 /*!
@@ -93,7 +92,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
     if (isInCanvas()){
         if(pressed){
 
-           // QColor red(255,0,0,255); // model concern???
            update();
         }
         emit updateCoords(relativeXPosOfImage, relativeYPosOfImage);
@@ -135,12 +133,6 @@ void MainWindow::on_colorButton_clicked()
 }
 
 
-//void MainWindow::on_eraserButton_clicked()
-//{
-//    color = QColor(0, 0, 0, 0);
-//}
-
-
 void MainWindow::on_eraserButton_toggled(bool checked)
 {
     if (checked){
@@ -163,9 +155,7 @@ void MainWindow::on_speedSlider_valueChanged(int value)
 }
 
 void MainWindow::addWidgetToScrollBar(QLabel* lab){
-//    QLabel* temp = new QLabel;
-//    temp->setText("asdfasdfasdf");
-
+    lab->setFrameShape(QFrame::Box);
     boxLayout->addWidget(lab);
     container->setLayout(boxLayout);
     ui->allSpriteThumbnails->setWidget(container);

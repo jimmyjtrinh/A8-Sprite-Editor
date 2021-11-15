@@ -13,12 +13,6 @@ using namespace std;
  */
 Model::Model(QObject *parent) : QObject(parent)
 {
-    //    spriteDimensions = 32;
-
-    //    // scale used to transform (256 * 256 image coords to 31 * 31 coords)
-    //    scale = spriteDimensions/513.0;
-    //    sprite = Sprite();
-
     fps = 1;
 
     timer = new QTimer(this); // asldkfjasldfkjasldfkjasldfkjsd
