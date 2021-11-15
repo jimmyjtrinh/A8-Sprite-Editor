@@ -30,6 +30,11 @@ Sprite::~Sprite()
 //    delete currSprite;
 }
 
+Sprite::Sprite(const Sprite& other)
+{
+    this->currSprite = other.currSprite;
+}
+
 void Sprite::setPixel(int x, int y, const QColor &color)
 {
     currSprite.setPixelColor(x,y,color);

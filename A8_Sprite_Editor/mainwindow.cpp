@@ -27,8 +27,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::updateGrid, &modelObj, &Model::updatePixmap);
     connect(this, &MainWindow::updatePixel, &modelObj, &Model::updateSprite);
     connect(this, &MainWindow::updateCoords, &modelObj, &Model::getCoords);
-     connect(this, &MainWindow::addNewSprite, &modelObj, &Model::createNewSprite);
-     connect(this, &MainWindow::changeFps, &modelObj, &Model::setFps);
+    connect(this, &MainWindow::addNewSprite, &modelObj, &Model::createNewSprite);
+    connect(this, &MainWindow::changeFps, &modelObj, &Model::setFps);
 
 
     connect(&startingPrompt, &Prompt::startApp, &modelObj, &Model::getDimensions);

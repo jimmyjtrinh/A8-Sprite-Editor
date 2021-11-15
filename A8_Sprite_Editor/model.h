@@ -27,8 +27,6 @@ public:
 //used with the view
 public slots:
 
-    void showBlue(); //changes blue button to light blue
-
     void updatePixmap();
     void updateSprite(double, double, QColor);
     void getCoords(double, double);
@@ -42,7 +40,6 @@ private slots:
 
 signals:
 
-    void blueSignal(QString);
     void sendPixmap(QPixmap);
     void sendAnimationPreviewPixmap(QPixmap);
     void sendCoords(QString);
@@ -51,7 +48,7 @@ signals:
 private:
     int fps;
     int currentAnimatedSpriteIndex;
-    QVector<Sprite> sprites;
+    QVector<Sprite*> sprites;
     int currentIndexOfSprites;
     Sprite sprite;
     int spriteDimensions;

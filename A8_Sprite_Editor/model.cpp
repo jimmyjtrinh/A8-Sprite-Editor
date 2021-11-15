@@ -26,18 +26,11 @@ Model::Model(QObject *parent) : QObject(parent)
     timer->start(1000);
 }
 
-/**
- * @brief Model::showBlue changes blue button to light blue
- */
-void Model::showBlue(){
-    emit blueSignal("Blue siganl working good :)");
-    //    timer.singleShot(delay - 200, this, &Model::stopShowingBlue);
-}
-
 void Model::createNewSprite(){
     Sprite temp = Sprite(spriteDimensions);
-
-    sprites.push_back(sprite);
+    sprites.remove(currentIndexOfSprites - 1);
+    sprites.push_back(new Sprite(sprite));
+    sprites.push_back(&sprite);
     sprite = temp;
     currentIndexOfSprites++;
 
@@ -48,16 +41,15 @@ void Model::createNewSprite(){
 
 void Model::getDimensions(int dim)
 {
-    cout << "got dimesions " << dim << endl;
     spriteDimensions = dim;
     scale = spriteDimensions/513.0;
     sprite = Sprite(dim);
-    cout << "set up sprite" << endl;
 
 
 
     // sprites.push_back(sprite);
-    currentIndexOfSprites = 0;
+    currentIndexOfSprites = 1;
+    sprites.push_back(&sprite);
 }
 
 void Model::updatePixmap(){
@@ -71,6 +63,7 @@ void Model::updateSprite(double x, double y, QColor color)
     int yInPixelSpace =  y*scale;
 
     sprite.setPixel(xInPixelSpace,yInPixelSpace,color);
+
 }
 
 void Model::getCoords(double x, double y){
@@ -85,7 +78,6 @@ void Model::getCoords(double x, double y){
 
 
 void Model::makeGrid(int canvasSize){
-    cout << "got to make grid" << endl;
     QPixmap pixmap(QPixmap::fromImage(sprite.getImage()).scaled(canvasSize, canvasSize, Qt::KeepAspectRatio));
     QPainter painter(&pixmap);
 
@@ -116,7 +108,7 @@ void Model::runAnimation(){
 
 void Model::sendIndexedSprite(){
     if(sprites.length() != 0)
-        emit sendAnimationPreviewPixmap(QPixmap::fromImage(sprites[currentAnimatedSpriteIndex++].currSprite).scaled(128, 128, Qt::KeepAspectRatio));
+        emit sendAnimationPreviewPixmap(QPixmap::fromImage(sprites[currentAnimatedSpriteIndex++]->currSprite).scaled(128, 128, Qt::KeepAspectRatio));
     if(currentAnimatedSpriteIndex>=sprites.length())
         currentAnimatedSpriteIndex = 0;
 }
