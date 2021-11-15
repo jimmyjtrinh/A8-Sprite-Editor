@@ -45,6 +45,8 @@ private slots:
 
     void addWidgetToScrollBar(QLabel*);
 
+    void on_paintBucketButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Model modelObj;
@@ -74,6 +76,8 @@ private:
     QVBoxLayout* boxLayout;
     QWidget* container;
 
+    bool paintSelected;
+
 
 signals:
     void updateGrid();
@@ -81,6 +85,7 @@ signals:
     void updateCoords(double, double);
     void addNewSprite();
     void changeFps(int);
+    void paintAll(QColor);
 
 
 

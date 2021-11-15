@@ -115,5 +115,10 @@ void Model::setListPreview(){
     emit sendLabel(temp);
 }
 
+void Model::updateAndPaintALl(QColor selected){
+    sprite.currSprite.fill(selected);
+
+}
+
 
 

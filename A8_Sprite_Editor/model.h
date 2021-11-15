@@ -34,6 +34,7 @@ public slots:
     void getDimensions(int);
     void createNewSprite();
     void setFps(int);
+    void updateAndPaintALl(QColor);
 
 
 //internal model slots

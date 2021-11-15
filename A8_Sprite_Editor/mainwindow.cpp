@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::updateCoords, &modelObj, &Model::getCoords);
     connect(this, &MainWindow::addNewSprite, &modelObj, &Model::createNewSprite);
     connect(this, &MainWindow::changeFps, &modelObj, &Model::setFps);
+    connect(this, &MainWindow::paintAll, &modelObj, &Model::updateAndPaintALl);
 
 
 
@@ -92,13 +93,14 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
     if (isInCanvas()){
         if(pressed){
 
-           update();
+            update();
         }
         emit updateCoords(relativeXPosOfImage, relativeYPosOfImage);
     }
 }
 
 void MainWindow::update(){
+
     emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, *currColor);
     emit updateGrid();
 }
@@ -124,9 +126,9 @@ void MainWindow::on_colorButton_clicked()
 {
     QColor temp = QColorDialog::getColor(QColor(255,0,0,255), this);
     if(temp.isValid())
-        {
-            selectedColor = temp;
-        }
+    {
+        selectedColor = temp;
+    }
 
     colorPreview.fill(selectedColor);
     ui->colorPreview->setPixmap(colorPreview.scaled(ui->colorPreview->width(),ui->colorPreview->height(),Qt::IgnoreAspectRatio));
@@ -160,4 +162,12 @@ void MainWindow::addWidgetToScrollBar(QLabel* lab){
     container->setLayout(boxLayout);
     ui->allSpriteThumbnails->setWidget(container);
 }
+
+
+void MainWindow::on_paintBucketButton_clicked()
+{
+    emit paintAll(selectedColor);
+    emit updateGrid();
+}
+
 
