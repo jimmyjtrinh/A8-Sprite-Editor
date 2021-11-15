@@ -19,10 +19,11 @@ Model::Model(QObject *parent) : QObject(parent)
     //    scale = spriteDimensions/513.0;
     //    sprite = Sprite();
 
-    fps =1;
+    fps = 1;
 
-
-
+    timer = new QTimer(this); // asldkfjasldfkjasldfkjasldfkjsd
+    connect(timer, &QTimer::timeout, this, &Model::runAnimation);
+    timer->start(1000);
 }
 
 /**
@@ -57,7 +58,6 @@ void Model::getDimensions(int dim)
 
     // sprites.push_back(sprite);
     currentIndexOfSprites = 0;
-
 }
 
 void Model::updatePixmap(){
@@ -107,22 +107,17 @@ void Model::makeGrid(int canvasSize){
 
 void Model::setFps(int i){
     fps = i;
-    runAnimation();// - broken need to fix way adding in sprites to model array
+    timer->start(1000/fps);
 }
 
 void Model::runAnimation(){
-    currentAnimatedSpriteIndex = 0;
-
-    for(int i = 0; i<sprites.length(); i++){
-        QTimer::singleShot((1000*i), this, &Model::sendIndexedSprite);
-
-    }
+    emit sendIndexedSprite();
 }
 
 void Model::sendIndexedSprite(){
-    cout<<currentAnimatedSpriteIndex<<endl;
-    emit sendAnimationPreviewPixmap(QPixmap::fromImage(sprites[currentAnimatedSpriteIndex++].currSprite).scaled(128, 128, Qt::KeepAspectRatio));
-    if(currentAnimatedSpriteIndex>=sprites.count())
+    if(sprites.length() != 0)
+        emit sendAnimationPreviewPixmap(QPixmap::fromImage(sprites[currentAnimatedSpriteIndex++].currSprite).scaled(128, 128, Qt::KeepAspectRatio));
+    if(currentAnimatedSpriteIndex>=sprites.length())
         currentAnimatedSpriteIndex = 0;
 }
 

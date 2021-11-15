@@ -22,6 +22,7 @@ class Model : public QObject
     Q_OBJECT
 public:
     explicit Model(QObject *parent = nullptr);
+    void runAnimation();
 
 //used with the view
 public slots:
@@ -55,11 +56,13 @@ private:
     Sprite sprite;
     int spriteDimensions;
     double scale;
-    void runAnimation();
+    QTimer *timer;
+
     void sendIndexedSprite();
 
-
     void makeGrid(int);
+
+
 };
 
 #endif // MODEL_H

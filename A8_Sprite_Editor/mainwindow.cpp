@@ -54,6 +54,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     startingPrompt.show();
     this->hide();
+
+
+
 }
 
 MainWindow::~MainWindow()

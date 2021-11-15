@@ -223,7 +223,7 @@
      </rect>
     </property>
     <property name="minimum">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="maximum">
      <number>24</number>
@@ -233,6 +233,12 @@
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+    <property name="tickPosition">
+     <enum>QSlider::TicksAbove</enum>
+    </property>
+    <property name="tickInterval">
+     <number>1</number>
     </property>
    </widget>
    <widget class="QPushButton" name="addNewFrameButton">
@@ -291,7 +297,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
