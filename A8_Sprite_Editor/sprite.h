@@ -3,6 +3,7 @@
 
 #include <QImage>
 #include <QPixmap>
+#include <QJsonObject>
 
 /*!
  * \brief The Sprite class Class representing all sprite objects in sprite editing program
@@ -21,6 +22,9 @@ public:
     // image related code
     QImage currSprite;
     QImage getImage();
+
+    //void read(const QJsonObject &json);
+    //void write(QJsonObject &json) const;
 
 private:
     void initializeSprite();

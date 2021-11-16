@@ -73,3 +73,28 @@ QImage Sprite::getImage()
 {
     return currSprite;
 }
+
+
+//void Sprite::read(const QJsonObject &json)
+//{
+//    if (json.contains("height") && json["height"].isInt()) // isDouble???
+//        spriteHeight = json["height"].toInt();
+
+//    if (json.contains("width") && json["width"].isInt())
+//        spriteWidth = json["width"].toInt();
+
+//    if (json.contains("numberOfFrames") && json["numberOfFrames"].isInt())
+//        spriteNumFrames = json["numberOfFrames"].toInt();]
+
+//    // PSEUDO CODE
+//    // Need to make actual code that can go through array.
+//    // Might need to go through QPixMap's matrix and assign each pixel an element from the "frames" array.
+//    if (json.contains("frames"))
+//        for (int i = 0; i < spriteNumFrames; i++)
+//           if (json.contains("frame" + i) && json["frame" + i].isArray())
+//              sprites = json["frame" + i].toArray();
+
+
+
+
+//}
