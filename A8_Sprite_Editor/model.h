@@ -34,7 +34,7 @@ public slots:
     // updates the pixmap
     void updatePixmap();
     // updates the pixels of a sprite to a color
-    void updateSprite(double, double, QColor);
+    void updateSprite(double, double, QColor, int);
     // takes in coordinates of mouse relative to gui
     void getCoords(double, double);
     // takes in dimensions and sets them in this class

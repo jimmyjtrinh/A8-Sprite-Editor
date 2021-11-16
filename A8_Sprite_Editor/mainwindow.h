@@ -53,6 +53,12 @@ private slots:
 
     void on_clearButton_clicked();
 
+    void on_smallestPenWidthSize_clicked();
+
+    void on_mediumPenWidthSize_clicked();
+
+    void on_largestPenWIdthSize_clicked();
+
 private:
     Ui::MainWindow *ui;
     Model modelObj;
@@ -67,6 +73,7 @@ private:
     double relativeYPosOfImage;
     bool paintSelected;
     int spriteDimensions = 32;
+    int penSize = 1;
 
     QColor* currColor;
     QColor selectedColor;
@@ -88,7 +95,7 @@ signals:
     // lets model know that grid must be updated
     void updateGrid();
     // lets model know that pixel (x,y) of canvas label must be updated to color
-    void updatePixel(double, double, QColor);
+    void updatePixel(double, double, QColor, int);
     // lets model know to update the coords to given (x,y) of canvas label interms of sprite pixel
     void updateCoords(double, double);
     // lets model know user requested to add new sprite

@@ -122,7 +122,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
  */
 void MainWindow::updateCanvasDrawing(){
 
-    emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, *currColor);
+    emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, *currColor, penSize);
     emit updateGrid();
 }
 
@@ -256,13 +256,35 @@ void MainWindow::on_previewActualSizeButton_toggled(bool checked)
     }
 }
 
-
-
-
-
-
+/*!
+ * \brief MainWindow::on_clearButton_clicked handles clear button being clicked, send signal to model to respond to click
+ */
 void MainWindow::on_clearButton_clicked()
 {
     emit clearSprite();
+}
+
+/*!
+ * \brief MainWindow::on_smallestPenWidthSize_clicked smallest pen size is wanted, change pensize to match request
+ */
+void MainWindow::on_smallestPenWidthSize_clicked()
+{
+    penSize = 1;
+}
+
+/*!
+ * \brief MainWindow::on_mediumPenWidthSize_clicked medium pen size is wanted, change pensize to 2 to match request
+ */
+void MainWindow::on_mediumPenWidthSize_clicked()
+{
+    penSize = 2;
+}
+
+/*!
+ * \brief MainWindow::on_largestPenWIdthSize_clicked largest pen size is wanted, change pensize to 3 to match request
+ */
+void MainWindow::on_largestPenWIdthSize_clicked()
+{
+    penSize=3;
 }
 

@@ -69,14 +69,22 @@ void Model::updatePixmap(){
  * \param y non-scaled y position of the grid (ranges from 0 - to preview size: 513
  * \param color color setting sprite pixel to
  */
-void Model::updateSprite(double x, double y, QColor color)
+void Model::updateSprite(double x, double y, QColor color, int thickness)
 {
     // convert 0 -513 x, y to 0 - 3, 15, 31, 63, ... x, y pixle range that corresponds to what was clicked on image
     int xInPixelSpace =  x*scale;
     int yInPixelSpace =  y*scale;
-
-    // set the pixel with actual corresponding x, y
-    sprite->setPixel(xInPixelSpace,yInPixelSpace,color);
+    // for loop goes through the thickness and adds pixels based on thickness
+        // first for loop loops through y pixel clicked + thickness
+            // second for loop does the same with x
+    for(int yDependingOnThick = 0; yDependingOnThick<thickness; yDependingOnThick++)
+        for(int xDependingOnThick = 0; xDependingOnThick<thickness;xDependingOnThick++ ){
+            int currentXPicel = xInPixelSpace+xDependingOnThick;
+            int currentYPicel = yInPixelSpace+yDependingOnThick;
+            // check that pixel drawn is not out range
+            if(currentXPicel<spriteDimensions && currentYPicel<spriteDimensions)
+                sprite->setPixel(currentXPicel,currentYPicel,color);
+        }
 
 }
 
