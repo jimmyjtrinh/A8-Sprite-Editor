@@ -105,10 +105,11 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
     relativeXPosOfImage = event->pos().x()-ui->label->x();
     relativeYPosOfImage = event->pos().y()-ui->label->y() - ui->menubar->height();
 
-    if (isInCanvas() && mouseHasBeenClicked)
-        updateCanvasDrawing();
+    if (isInCanvas()){
+        if (mouseHasBeenClicked)
+            updateCanvasDrawing();
 
-    emit updateCoords(relativeXPosOfImage, relativeYPosOfImage);
+        emit updateCoords(relativeXPosOfImage, relativeYPosOfImage);}
 }
 
 

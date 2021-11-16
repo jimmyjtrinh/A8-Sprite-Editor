@@ -31,14 +31,10 @@ Model::Model(QObject *parent) : QObject(parent)
 void Model::createNewSprite(){
     // call method that will handle thumbnail previews
     setListPreview();
-
-    Sprite temp = Sprite(spriteDimensions);
-    sprites.remove(currentIndexOfSprites - 1);
-    sprites.push_back(new Sprite(sprite));
-    sprites.push_back(&sprite);
+    Sprite *temp = new Sprite(spriteDimensions);
+    sprites.push_back(temp);
     sprite = temp;
-    currentIndexOfSprites = sprites.length();
-
+    currentIndexOfSprites = sprites.length()-1;
     updatePixmap();
 
 }
@@ -53,10 +49,10 @@ void Model::getDimensions(int dim)
     spriteDimensions = dim;
     scale = spriteDimensions/previewSize;
     // create the first sprite of model
-    sprite = Sprite(dim);
+    sprite = new Sprite(dim);
     // index of sprite is that of the only sprite we have
-    currentIndexOfSprites = 1;
-    sprites.push_back(&sprite);
+    currentIndexOfSprites = 0;
+    sprites.push_back(sprite);
 }
 
 /*!
@@ -80,7 +76,7 @@ void Model::updateSprite(double x, double y, QColor color)
     int yInPixelSpace =  y*scale;
 
     // set the pixel with actual corresponding x, y
-    sprite.setPixel(xInPixelSpace,yInPixelSpace,color);
+    sprite->setPixel(xInPixelSpace,yInPixelSpace,color);
 
 }
 
@@ -105,7 +101,7 @@ void Model::getCoords(double x, double y){
  * \param canvasSize size of the canvas/preview drawing of sprite
  */
 void Model::makeGrid(int canvasSize){
-    QPixmap pixmap(QPixmap::fromImage(sprite.getImage()).scaled(canvasSize, canvasSize, Qt::KeepAspectRatio));
+    QPixmap pixmap(QPixmap::fromImage(sprite->getImage()).scaled(canvasSize, canvasSize, Qt::KeepAspectRatio));
     QPainter painter(&pixmap);
 
     painter.setPen(QColor(0, 0, 0, 200));
@@ -162,7 +158,7 @@ void Model::sendIndexedSprite(){
 void Model::setListPreview(){
     QLabel *temp = new QLabel();
     // set the the label of the temp to the image of the most recent preview of the sprite
-    temp->setPixmap(QPixmap::fromImage(sprite.getImage().scaled(83, 83, Qt::KeepAspectRatio)));
+    temp->setPixmap(QPixmap::fromImage(sprite->getImage().scaled(83, 83, Qt::KeepAspectRatio)));
     emit sendThumbnailLabel(temp);
 }
 
@@ -172,7 +168,7 @@ void Model::setListPreview(){
  * \param selected color to set as the fill of the image
  */
 void Model::updateAndPaintALl(QColor selected){
-    sprite.currSprite.fill(selected);
+    sprite->currSprite.fill(selected);
 
 }
 

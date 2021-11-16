@@ -71,7 +71,7 @@ private:
     double previewSize = 513.0;
 
     QVector<Sprite*> sprites;
-    Sprite sprite;
+    Sprite *sprite;
 
     QTimer *timer;
 
