@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::changeFps, &modelObj, &Model::setFps);
     connect(this, &MainWindow::paintAll, &modelObj, &Model::updateAndPaintALl);
     connect(this, &MainWindow::showPreview, &modelObj, &Model::previewAnimation);
+    connect(this, &MainWindow::clearSprite, &modelObj, &Model::clearingSprite);
 
 
     //Prompt to View
@@ -258,4 +259,10 @@ void MainWindow::on_previewActualSizeButton_toggled(bool checked)
 
 
 
+
+
+void MainWindow::on_clearButton_clicked()
+{
+    emit clearSprite();
+}
 

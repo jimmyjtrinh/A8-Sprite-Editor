@@ -184,5 +184,12 @@ void Model::updateAndPaintALl(QColor selected){
 
 }
 
+void Model::clearingSprite(){
+    QColor blank(0,0,0,0);
+    sprite->currSprite.fill(blank);
+
+    updatePixmap();
+}
+
 
 

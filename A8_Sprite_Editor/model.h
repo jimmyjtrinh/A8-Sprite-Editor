@@ -48,6 +48,8 @@ public slots:
 
     void previewAnimation();
 
+    void clearingSprite();
+
 
 //internal model slots
 private slots:

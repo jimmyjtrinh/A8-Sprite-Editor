@@ -51,6 +51,8 @@ private slots:
     // event that handles when the preview button is selected
     void on_previewActualSizeButton_toggled(bool checked);
 
+    void on_clearButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     Model modelObj;
@@ -97,6 +99,8 @@ signals:
     void paintAll(QColor);
     // lets the model know to start showing preview
     void showPreview();
+
+    void clearSprite();
 
 
 };
