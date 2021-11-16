@@ -54,7 +54,7 @@ private:
 
     //for testing purposes ONLY PLS REMOVE I BEG OF U
     Sprite sprite;
-    bool pressed;
+    bool mouseHasBeenClicked;
 
     double relativeXPosOfImage;
     double relativeYPosOfImage;
@@ -71,12 +71,15 @@ private:
     QColor backupColor;
 
     bool isInCanvas();
-    void update();
+    void updateCanvasDrawing();
 
     QVBoxLayout* boxLayout;
     QWidget* container;
 
     bool paintSelected;
+
+    void initializeMembers();
+    void setMouseTrackingBool(bool);
 
 
 signals:

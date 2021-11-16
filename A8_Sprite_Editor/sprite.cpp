@@ -1,46 +1,74 @@
 #include "sprite.h"
 #include <iostream>
-
+/*!
+ *Class representing all sprite objects in sprite editing program
+ */
 using namespace std;
 
+/*!
+ * \brief Sprite::Sprite constructs sprite and initializes all mebers of a sprite with size 32
+ */
 Sprite::Sprite()
 {
-    currSprite = QImage(32, 32, QImage::Format_RGBA64);
+    int initialSpriteSize = 32;
+    // set all sprites to have a qimage of size 32
+    currSprite = QImage(initialSpriteSize, initialSpriteSize, QImage::Format_RGBA64);
+    // fill image to be empty
     QColor blank(0,0,0,0);
     currSprite.fill(blank);
-//    initializeSprite();
 }
 
+/*!
+ * \brief Sprite::Sprite constructs sprite and initializes all mebers of a sprite with size of what is passed in
+ * \param dimensions size of sprite
+ */
 Sprite:: Sprite(int dimensions)
 {
     currSprite = QImage(dimensions, dimensions, QImage::Format_RGBA64);
     QColor blank(0,0,0,0);
     currSprite.fill(blank);
-//    initializeSprite();
 }
 
+/*!
+ * \brief Sprite::initializeSprite resets sprite to be in the same state it was when constructed
+ */
 void Sprite::initializeSprite()
 {
     QColor blank(0,0,0,0);
     currSprite.fill(blank);
 }
-
+/*!
+ * \brief Sprite::~Sprite destructor
+ */
 Sprite::~Sprite()
 {
-//    delete currSprite;
 }
 
+/*!
+ * \brief Sprite::Sprite copy constructor, sets this sprite to other sprite by copying
+ * others parameters
+ * \param other sprite who's parameters will be set to this'
+ */
 Sprite::Sprite(const Sprite& other)
 {
     this->currSprite = other.currSprite;
 }
 
+/*!
+ * \brief Sprite::setPixel take given x and y and set pixel at coords to color
+ * \param x x coord of image to change
+ * \param y y coord of image to change
+ * \param color color to change pixel at coords to
+ */
 void Sprite::setPixel(int x, int y, const QColor &color)
 {
     currSprite.setPixelColor(x,y,color);
 
 }
 
+/*!
+ * \brief Sprite::getImage returns image of this sprite
+ */
 QImage Sprite::getImage()
 {
     return currSprite;

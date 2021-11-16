@@ -60,7 +60,7 @@ private:
     QTimer *timer;
 
     void sendIndexedSprite();
-
+double previewSize = 513.0;
     void setListPreview();
 
     void makeGrid(int);
