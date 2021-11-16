@@ -321,7 +321,7 @@
    </widget>
    <widget class="QLabel" name="previewActualSizeLabel">
     <property name="enabled">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="geometry">
      <rect>
