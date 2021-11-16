@@ -48,6 +48,8 @@ private slots:
     void addWidgetToScrollBar(QLabel*);
     // event that handles what to send to model when paint bucket is selected
     void on_paintBucketButton_clicked();
+    // event that handles when the preview button is selected
+    void on_previewActualSizeButton_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
@@ -93,7 +95,8 @@ signals:
     void changeFps(int);
     // lets model know to fill canvas to this
     void paintAll(QColor);
-
+    // lets the model know to start showing preview
+    void showPreview();
 
 
 };

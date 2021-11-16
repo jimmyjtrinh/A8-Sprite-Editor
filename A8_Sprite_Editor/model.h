@@ -46,6 +46,8 @@ public slots:
     // takes given in qcolor and sets all pixels of sprite to color
     void updateAndPaintALl(QColor);
 
+    void previewAnimation();
+
 
 //internal model slots
 private slots:
@@ -60,6 +62,8 @@ signals:
     void sendCoords(QString);
     // send thumbnails to users
     void sendThumbnailLabel(QLabel*);
+    // send hte animation for previwing at the actual pixel sizes
+    void sendPreviewPixmap(QPixmap);
 
 
 private:

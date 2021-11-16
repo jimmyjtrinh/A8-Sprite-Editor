@@ -134,7 +134,9 @@ void Model::setFps(int updatedFps){
  * \brief Model::runAnimation slot that handles beginning the animation cycle
  */
 void Model::runAnimation(){
-    emit sendIndexedSprite();
+    previewAnimation();
+    sendIndexedSprite();
+
 }
 
 /*!
@@ -149,6 +151,16 @@ void Model::sendIndexedSprite(){
     // reset the index variable
     if(currentAnimatedSpriteIndex>=sprites.length())
         currentAnimatedSpriteIndex = 0;
+}
+
+/*!
+ * \brief Model::previewAnimation Will send the pixmaps to the view for the preview at actual size without scale
+ */
+void Model::previewAnimation(){
+    if(sprites.length() != 0)
+        // send the sprite at which the class member index variable is at as of rn
+        emit sendPreviewPixmap(QPixmap::fromImage(sprites[currentAnimatedSpriteIndex]->currSprite));
+    // reset the index variable
 }
 
 /*!

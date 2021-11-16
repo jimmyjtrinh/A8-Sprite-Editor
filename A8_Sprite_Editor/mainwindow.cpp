@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&modelObj, &Model::sendCoords, ui->coordLabel, &QLabel::setText);
     connect(&modelObj, &Model::sendAnimationPreviewPixmap, ui->previewImageLabel, &QLabel::setPixmap);
     connect(&modelObj, &Model::sendThumbnailLabel, this, &MainWindow::addWidgetToScrollBar);
-
+    connect(&modelObj, &Model::sendPreviewPixmap, ui->previewActualSizeLabel, &QLabel::setPixmap);
 
 
     //View to Model
@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::addNewSprite, &modelObj, &Model::createNewSprite);
     connect(this, &MainWindow::changeFps, &modelObj, &Model::setFps);
     connect(this, &MainWindow::paintAll, &modelObj, &Model::updateAndPaintALl);
+    connect(this, &MainWindow::showPreview, &modelObj, &Model::previewAnimation);
 
 
     //Prompt to View
@@ -69,6 +70,8 @@ void MainWindow::initializeMembers(){
     container = new QWidget();
     boxLayout = new QVBoxLayout();
     ui->allSpriteThumbnails->setAlignment(Qt::AlignTop);
+
+    ui->previewActualSizeLabel->hide();
 }
 
 /*!
@@ -235,6 +238,23 @@ void MainWindow::setMouseTrackingBool(bool b){
     ui->centralwidget->setMouseTracking(b);
     ui->label->setMouseTracking(b);
 }
+
+
+/*!
+ * \brief MainWindow::on_previewActualSizeButton_toggled enables the preview at of actual size label
+ * \param b bool see if button is clicked
+ */
+void MainWindow::on_previewActualSizeButton_toggled(bool checked)
+{
+    if(checked){
+        ui->previewActualSizeLabel->show();
+            emit showPreview();
+    }
+    else {
+        ui->previewActualSizeLabel->hide();
+    }
+}
+
 
 
 
