@@ -208,6 +208,7 @@ void MainWindow::on_speedSlider_valueChanged(int value)
 void MainWindow::addWidgetToScrollBar(QLabel* lab){
     // set the outlining of label
     lab->setFrameShape(QFrame::Box);
+    lab->setFixedSize(83,83);
     // add widget to layout
     boxLayout->addWidget(lab);
     container->setLayout(boxLayout);
