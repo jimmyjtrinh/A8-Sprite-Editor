@@ -18,6 +18,10 @@
 
 using std::rand;
 
+/*!
+ * \brief The Model class Model of sprite editing program. Handles what to do when creating an istance of the program. Handles
+ * data inputs from controller and deciphers how to use data.
+ */
 class Model : public QObject
 {
     Q_OBJECT
@@ -27,13 +31,19 @@ public:
 
 //used with the view
 public slots:
-
+    // updates the pixmap
     void updatePixmap();
+    // updates the pixels of a sprite to a color
     void updateSprite(double, double, QColor);
+    // takes in coordinates of mouse relative to gui
     void getCoords(double, double);
+    // takes in dimensions and sets them in this class
     void getDimensions(int);
+    // creates new sprite whenever clicked in view is done
     void createNewSprite();
+    // takes in fps and changes this classes fps
     void setFps(int);
+    // takes given in qcolor and sets all pixels of sprite to color
     void updateAndPaintALl(QColor);
 
 
@@ -42,27 +52,34 @@ private slots:
 
 
 signals:
-
-    void sendPixmap(QPixmap);
+    // send given pixmap of grid to view for canvas
+    void sendGrid(QPixmap);
+    // send animation preview thumbnail pixmap to view for label
     void sendAnimationPreviewPixmap(QPixmap);
+    // send coords as strings to view for its labels
     void sendCoords(QString);
-    void sendLabel(QLabel*);
+    // send thumbnails to users
+    void sendThumbnailLabel(QLabel*);
 
 
 private:
     int fps;
     int currentAnimatedSpriteIndex;
-    QVector<Sprite*> sprites;
-    int currentIndexOfSprites;
-    Sprite sprite;
     int spriteDimensions;
     double scale;
+    int currentIndexOfSprites;
+    double previewSize = 513.0;
+
+    QVector<Sprite*> sprites;
+    Sprite sprite;
+
     QTimer *timer;
 
+    // sends what is currently the sprite that should be previewed in animation loop after doing some work
     void sendIndexedSprite();
-double previewSize = 513.0;
-    void setListPreview();
 
+    void setListPreview();
+    // make grid given canvas size
     void makeGrid(int);
 
 

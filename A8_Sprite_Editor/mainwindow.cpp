@@ -22,10 +22,10 @@ MainWindow::MainWindow(QWidget *parent)
     setMouseTrackingBool(false);
 
     //Model to View
-    connect(&modelObj, &Model::sendPixmap, ui->label, &QLabel::setPixmap);
+    connect(&modelObj, &Model::sendGrid, ui->label, &QLabel::setPixmap);
     connect(&modelObj, &Model::sendCoords, ui->coordLabel, &QLabel::setText);
     connect(&modelObj, &Model::sendAnimationPreviewPixmap, ui->previewImageLabel, &QLabel::setPixmap);
-    connect(&modelObj, &Model::sendLabel, this, &MainWindow::addWidgetToScrollBar);
+    connect(&modelObj, &Model::sendThumbnailLabel, this, &MainWindow::addWidgetToScrollBar);
 
 
 
@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Prompt to View
     connect(&startingPrompt, &Prompt::startApp, &modelObj, &Model::getDimensions);
-    connect(&startingPrompt, &Prompt::startApp, this, &MainWindow::openWindow);
+    connect(&startingPrompt, &Prompt::startApp, this, &MainWindow::closePromptAndOpenEditor);
 
     initializeMembers();
 }
@@ -56,9 +56,6 @@ void MainWindow::initializeMembers(){
     selectedColor = QColor(255,0,0,255);
     currColor = &selectedColor;
     ERASER = QColor(0,0,0,0);
-
-
-
     color = QColor(255, 0, 0, 255);
     backupColor = color;
 
@@ -68,7 +65,6 @@ void MainWindow::initializeMembers(){
 
     startingPrompt.show();
     this->hide();
-
 
     container = new QWidget();
     boxLayout = new QVBoxLayout();
@@ -88,7 +84,7 @@ MainWindow::~MainWindow()
  * starting prompt
  * \param x
  */
-void MainWindow::openWindow(int x)
+void MainWindow::closePromptAndOpenEditor(int x)
 {
     // show sprite editor
     this->show();

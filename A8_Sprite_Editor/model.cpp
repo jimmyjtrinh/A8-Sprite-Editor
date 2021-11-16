@@ -121,7 +121,7 @@ void Model::makeGrid(int canvasSize){
     }
 
     // send grid to view to draw
-    emit sendPixmap(pixmap);
+    emit sendGrid(pixmap);
 }
 
 /*!
@@ -163,7 +163,7 @@ void Model::setListPreview(){
     QLabel *temp = new QLabel();
     // set the the label of the temp to the image of the most recent preview of the sprite
     temp->setPixmap(QPixmap::fromImage(sprite.getImage().scaled(83, 83, Qt::KeepAspectRatio)));
-    emit sendLabel(temp);
+    emit sendThumbnailLabel(temp);
 }
 
 /*!
