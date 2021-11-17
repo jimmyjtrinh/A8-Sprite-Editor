@@ -15,6 +15,10 @@
 #include "sprite.h"
 #include <QTimer>
 #include <QLabel>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QFile>
 
 using std::rand;
 
@@ -87,6 +91,13 @@ private:
     void setListPreview();
     // make grid given canvas size
     void makeGrid(int);
+
+    void save();
+
+    void write(QJsonObject &json) const;
+
+
+    QJsonObject jsonObj;
 
 
 };

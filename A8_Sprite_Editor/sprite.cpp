@@ -74,6 +74,10 @@ QImage Sprite::getImage()
     return currSprite;
 }
 
+QColor Sprite::getPixel(int x, int y)
+{
+    return currSprite.pixelColor(x, y);
+}
 
 //void Sprite::read(const QJsonObject &json)
 //{

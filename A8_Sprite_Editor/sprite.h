@@ -23,6 +23,8 @@ public:
     QImage currSprite;
     QImage getImage();
 
+    QColor getPixel(int x, int y);
+
     //void read(const QJsonObject &json);
     //void write(QJsonObject &json) const;
 

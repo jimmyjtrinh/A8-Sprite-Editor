@@ -53,6 +53,9 @@ void Model::getDimensions(int dim)
     // index of sprite is that of the only sprite we have
     currentIndexOfSprites = 0;
     sprites.push_back(sprite);
+
+    //calls JSON write method.
+//    write(jsonObj);
 }
 
 /*!
@@ -199,5 +202,52 @@ void Model::clearingSprite(){
     updatePixmap();
 }
 
+void Model::write(QJsonObject &json) const
+{
+    int currIndex = 0;
+    json["height"] = spriteDimensions;
+    json["width"] = spriteDimensions;
+    json["numberOfFrames"] = sprites.length();
+    QJsonObject allSprites;
+    for(Sprite* s : sprites)
+    {
+        QJsonArray currSprite;
+        for(int j = 0; j < spriteDimensions; j ++)
+        {
+            QJsonArray currRow;
+            for(int i = 0; i < spriteDimensions; i ++)
+            {
+                QJsonArray colors;
+                colors.append(sprites[currIndex]->getPixel(j, i).red());
+                colors.append(sprites[currIndex]->getPixel(j, i).green());
+                colors.append(sprites[currIndex]->getPixel(j, i).blue());
+                colors.append(sprites[currIndex]->getPixel(j, i).alpha());
+                currRow.append(colors);
+            }
+            currSprite.append(currRow);
+        }
+        allSprites.insert(QString("frame%1").arg(currIndex), currSprite);
 
+        currIndex++;
+
+    }
+    json["frames"] = allSprites;
+    QJsonDocument temp(json);
+    QFile file("C:\\Users\\dayja\\OneDrive\\Desktop\\temp.txt");
+    file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate);
+    file.write(temp.toJson());
+    file.close();
+
+
+}
+
+void Model::save()
+{
+    QJsonDocument temp(jsonObj);
+    QFile file("C:\\Users\\dayja\\OneDrive\\Desktop\\temp.txt");
+
+    file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate);
+    file.write(temp.toJson());
+    file.close();
+}
 
