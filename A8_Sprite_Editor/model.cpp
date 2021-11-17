@@ -233,16 +233,43 @@ void Model::write(QJsonObject &json) const
 
     }
     json["frames"] = allSprites;
-    QJsonDocument temp(json);
-    QFile file("C:\\Users\\dayja\\OneDrive\\Desktop\\temp.txt");
-    file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate);
-    file.write(temp.toJson());
-    file.close();
+//    QJsonDocument temp(json);
+//    QFile file("C:\\Users\\dayja\\OneDrive\\Desktop\\temp.txt");
+//    file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate);
+//    file.write(temp.toJson());
+//    file.close();
 
 
 }
 void Model::read(QJsonObject &json){
     cout<< "we are reading rainbow"<< endl;
+        int height;
+        int width;
+        int frames;
+        if (json.contains("height") && json["height"].isDouble())
+            height = json["height"].toInt();
+            cout << "height is: "<< height << endl;
+
+        if (json.contains("width") && json["width"].isDouble())
+            width = json["width"].toInt();
+            cout << "width is: "<< width << endl;
+
+        if (height != width){
+            return; // error message
+        }
+
+        if (json.contains("numberOfFrames") && json["numberOfFrames"].isDouble())
+            frames = json["numberOfFrames"].toInt();
+            cout << "frames is: "<< frames << endl;
+
+        // PSEUDO CODE
+        // Need to make actual code that can go through array.
+        // Might need to go through QPixMap's matrix and assign each pixel an element from the "frames" array.
+        for (int i = 0; i < frames; i++){
+            cout << "frame" + QString::number(i).toStdString()<< endl;
+            if (json.contains("frame"))
+                cout << "frame is in the json: " << endl;
+        }
 }
 
 void Model::save(QString fileName)
@@ -252,12 +279,13 @@ void Model::save(QString fileName)
     QFile file(fileName);
 
     file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate);
-    file.write(temp.toJson());
+    file.write(temp.toJson(QJsonDocument::Compact));
     file.close();
 }
 
 void Model::open(QString fileName)
 {
+    // NEED prompt for saving before opening a new sprite file
     QFile jsonFile(fileName);
     jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
     QJsonDocument JsonDocument = QJsonDocument::fromJson(jsonFile.readAll());

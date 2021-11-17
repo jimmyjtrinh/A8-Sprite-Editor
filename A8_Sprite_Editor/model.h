@@ -72,9 +72,9 @@ signals:
     void sendCoords(QString);
     // send thumbnails to users
     void sendThumbnailLabel(QPixmap);
-    // send hte animation for previwing at the actual pixel sizes
+    // send the animation for previwing at the actual pixel sizes
     void sendPreviewPixmap(QPixmap);
-
+    // sends the current sprite to the thumbnail to see changes in real time
     void updateCurrentSpriteThumbnail(QPixmap, int);
 
 
@@ -85,6 +85,7 @@ private:
     double scale;
     int currentIndexOfSprites;
     double previewSize = 513.0;
+    int numFrames; // number of sprites
 
     QVector<Sprite*> sprites;
     Sprite *sprite;

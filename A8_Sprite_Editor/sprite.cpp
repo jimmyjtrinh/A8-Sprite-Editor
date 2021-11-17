@@ -97,8 +97,4 @@ QColor Sprite::getPixel(int x, int y)
 //        for (int i = 0; i < spriteNumFrames; i++)
 //           if (json.contains("frame" + i) && json["frame" + i].isArray())
 //              sprites = json["frame" + i].toArray();
-
-
-
-
 //}
