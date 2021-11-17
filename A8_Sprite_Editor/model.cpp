@@ -29,14 +29,13 @@ Model::Model(QObject *parent) : QObject(parent)
  * sprites.
  */
 void Model::createNewSprite(){
-    // call method that will handle thumbnail previews
-    setListPreview();
     Sprite *temp = new Sprite(spriteDimensions);
     sprites.push_back(temp);
     sprite = temp;
     currentIndexOfSprites = sprites.length()-1;
     updatePixmap();
-
+    // call method that will handle thumbnail previews
+    setListPreview();
 }
 
 /*!
@@ -54,6 +53,7 @@ void Model::getDimensions(int dim)
     currentIndexOfSprites = 0;
     sprites.push_back(sprite);
 
+    setListPreview();
     //calls JSON write method.
 //    write(jsonObj);
 }
@@ -82,13 +82,13 @@ void Model::updateSprite(double x, double y, QColor color, int thickness)
             // second for loop does the same with x
     for(int yDependingOnThick = 0; yDependingOnThick<thickness; yDependingOnThick++)
         for(int xDependingOnThick = 0; xDependingOnThick<thickness;xDependingOnThick++ ){
-            int currentXPicel = xInPixelSpace+xDependingOnThick;
-            int currentYPicel = yInPixelSpace+yDependingOnThick;
+            int currentXPixel = xInPixelSpace+xDependingOnThick;
+            int currentYPixel = yInPixelSpace+yDependingOnThick;
             // check that pixel drawn is not out range
-            if(currentXPicel<spriteDimensions && currentYPicel<spriteDimensions)
-                sprite->setPixel(currentXPicel,currentYPicel,color);
-        }
-
+            if(currentXPixel<spriteDimensions && currentYPixel<spriteDimensions)
+                sprite->setPixel(currentXPixel,currentYPixel,color);
+        } 
+    emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
 }
 
 /*!
@@ -169,9 +169,8 @@ void Model::sendIndexedSprite(){
  */
 void Model::previewAnimation(){
     if(sprites.length() != 0)
-        // send the sprite at which the class member index variable is at as of rn
+        // updating the preview by sending the current pixmap from the list of sprites
         emit sendPreviewPixmap(QPixmap::fromImage(sprites[currentAnimatedSpriteIndex]->currSprite));
-    // reset the index variable
 }
 
 /*!
@@ -192,12 +191,14 @@ void Model::setListPreview(){
  */
 void Model::updateAndPaintALl(QColor selected){
     sprite->currSprite.fill(selected);
+    emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
 
 }
 
 void Model::clearingSprite(){
     QColor blank(0,0,0,0);
     sprite->currSprite.fill(blank);
+    emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
 
     updatePixmap();
 }
@@ -271,6 +272,7 @@ void Model::open(QString fileName)
  * \param index index of sprite to change to
  */
 void Model::changeSpriteToIndex(int index){
+    currentIndexOfSprites = index;
     sprite = sprites[index];
     updatePixmap();
 }

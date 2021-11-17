@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&modelObj, &Model::sendAnimationPreviewPixmap, ui->previewImageLabel, &QLabel::setPixmap);
     connect(&modelObj, &Model::sendThumbnailLabel, this, &MainWindow::addWidgetToScrollBar);
     connect(&modelObj, &Model::sendPreviewPixmap, ui->previewActualSizeLabel, &QLabel::setPixmap);
+    connect(&modelObj, &Model::updateCurrentSpriteThumbnail, this, &MainWindow::updateButtonThumbnail);
 
 
     //View to Model
@@ -59,13 +60,10 @@ void MainWindow::initializeMembers(){
     relativeXPosOfImage = 0;
     relativeYPosOfImage = 0;
 
-    selectedColor = QColor(255,0,0,255);
+    selectedColor = QColor(0,0,0,255);
     currColor = &selectedColor;
     ERASER = QColor(0,0,0,0);
-    color = QColor(255, 0, 0, 255);
-    backupColor = color;
-
-    ui->colorPreviewButton->setStyleSheet(QString("background-color: %1").arg(color.name()));
+    ui->colorPreviewButton->setStyleSheet(QString("background-color: %1").arg(selectedColor.name()));
 
     startingPrompt.show();
     this->hide();
@@ -167,7 +165,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event){
  */
 void MainWindow::on_colorButton_clicked()
 {
-    QColor temp = QColorDialog::getColor(QColor(255,0,0,255), this);
+    QColor temp = QColorDialog::getColor(selectedColor, this);
     // gets color and cheks if it is valid
     if(temp.isValid())
     {
@@ -176,7 +174,7 @@ void MainWindow::on_colorButton_clicked()
         // update button color that shows color
         ui->colorPreviewButton->setStyleSheet(QString("background-color: %1").arg(temp.name()));
     }
-
+    ui->eraserButton->click();
 }
 
 /*!
@@ -362,5 +360,14 @@ void MainWindow::on_actionOpen_triggered()
 void MainWindow::on_colorPreviewButton_clicked()
 {
     on_colorButton_clicked();
+}
+
+void MainWindow::updateButtonThumbnail(QPixmap lab, int index){
+    QPushButton* temp = previewThumbnails[index];
+
+    QIcon ButtonIcon(lab);
+    temp->setIcon(ButtonIcon);
+    temp->setIconSize(lab.size());
+    temp->setFixedSize(lab.width()+2, lab.height()+10);
 }
 

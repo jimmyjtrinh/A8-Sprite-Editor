@@ -75,6 +75,8 @@ signals:
     // send hte animation for previwing at the actual pixel sizes
     void sendPreviewPixmap(QPixmap);
 
+    void updateCurrentSpriteThumbnail(QPixmap, int);
+
 
 private:
     int fps;

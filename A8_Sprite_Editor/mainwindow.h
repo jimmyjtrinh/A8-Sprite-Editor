@@ -72,6 +72,8 @@ private slots:
     // takes name of button that is passed in and translates name to number and sends to model
     void translateButtonNameToNumber();
 
+    void updateButtonThumbnail(QPixmap,int);
+
 private:
     Ui::MainWindow *ui;
     Model modelObj;
@@ -91,7 +93,6 @@ private:
     QColor* currColor;
     QColor selectedColor;
     QColor ERASER;
-    QColor color;
     QColor backupColor;
 
     // checks if mouse location is on top of canvas
