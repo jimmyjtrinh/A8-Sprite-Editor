@@ -112,9 +112,11 @@ void Model::getCoords(double x, double y){
  * \param canvasSize size of the canvas/preview drawing of sprite
  */
 void Model::makeGrid(int canvasSize){
+    cout << "in make grid" << endl;
     QPixmap pixmap(QPixmap::fromImage(sprite->getImage()).scaled(canvasSize, canvasSize, Qt::KeepAspectRatio));
     QPainter painter(&pixmap);
 
+    cout << "after making pixmap" << endl;
     painter.setPen(QColor(0, 0, 0, 200));
 
     //vertical lines
@@ -242,34 +244,77 @@ void Model::write(QJsonObject &json) const
 
 }
 void Model::read(QJsonObject &json){
+    timer->stop();
+    currentAnimatedSpriteIndex = 0;
     cout<< "we are reading rainbow"<< endl;
-        int height;
-        int width;
-        int frames;
-        if (json.contains("height") && json["height"].isDouble())
+        int height = -1;
+        int width = -1;
+        int frames = -1;
+        QJsonObject test;
+        if (json.contains("height") && json["height"].isDouble()){
             height = json["height"].toInt();
             cout << "height is: "<< height << endl;
+        }
 
-        if (json.contains("width") && json["width"].isDouble())
+        if (json.contains("width") && json["width"].isDouble()){
             width = json["width"].toInt();
             cout << "width is: "<< width << endl;
+        }
 
         if (height != width){
             return; // error message
         }
 
-        if (json.contains("numberOfFrames") && json["numberOfFrames"].isDouble())
+        if (json.contains("numberOfFrames") && json["numberOfFrames"].isDouble()){
             frames = json["numberOfFrames"].toInt();
             cout << "frames is: "<< frames << endl;
+        }
+
+        if(json.contains("frames"))
+        {
+            test = json["frames"].toObject();
+        }
+
+
+
+        this->getDimensions(height);
+
+        sprites.clear();
+
+
+        for(int i = 0; i < frames; i ++)
+        {
+            QJsonArray currentFrame = test[QString("frame%1").arg(i)].toArray();
+            Sprite* newSprite = new Sprite(height);
+                        for(int row = 0; row < height; row++){
+                            QJsonArray rowArray = currentFrame.at(row).toArray();
+                            for(int col = 0; col < width; col++){
+                                QJsonArray colorArray = rowArray.at(col).toArray();
+                                int red = colorArray[0].toInt();
+                                int blue = colorArray[1].toInt();
+                                int green = colorArray[2].toInt();
+                                int alpha = colorArray[3].toInt();
+                                newSprite->setPixel(row, col, QColor(red,blue,green,alpha));
+                            }
+                        }
+            sprites.push_back(newSprite);
+        }
+        cout << sprites.length() << endl;
+        sprite = sprites[0];
+        cout << "sprite->getPixel(0,0).red()" << endl;
+
+        updatePixmap();
+        timer->start(1000);
+
 
         // PSEUDO CODE
         // Need to make actual code that can go through array.
         // Might need to go through QPixMap's matrix and assign each pixel an element from the "frames" array.
-        for (int i = 0; i < frames; i++){
-            cout << "frame" + QString::number(i).toStdString()<< endl;
-            if (json.contains("frame"))
-                cout << "frame is in the json: " << endl;
-        }
+//        for (int i = 0; i < frames; i++){
+//            cout << "frame" + QString::number(i).toStdString()<< endl;
+//            if (json.contains("frame"))
+//                cout << "frame is in the json: " << endl;
+//        }
 }
 
 void Model::save(QString fileName)

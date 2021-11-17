@@ -174,7 +174,8 @@ void MainWindow::on_colorButton_clicked()
         // update button color that shows color
         ui->colorPreviewButton->setStyleSheet(QString("background-color: %1").arg(temp.name()));
     }
-    ui->eraserButton->click();
+    if(ui->eraserButton->isChecked())
+        ui->eraserButton->click();
 }
 
 /*!

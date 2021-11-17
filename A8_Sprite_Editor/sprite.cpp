@@ -54,6 +54,8 @@ Sprite::Sprite(const Sprite& other)
     this->currSprite = other.currSprite;
 }
 
+
+
 /*!
  * \brief Sprite::setPixel take given x and y and set pixel at coords to color
  * \param x x coord of image to change
