@@ -50,14 +50,18 @@ private slots:
     void on_paintBucketButton_clicked();
     // event that handles when the preview button is selected
     void on_previewActualSizeButton_toggled(bool checked);
-
+    // event that handles when clear is selected
     void on_clearButton_clicked();
-
+    // event that handles changing pen thickness
     void on_smallestPenWidthSize_clicked();
-
+    // event that handles when medium pen width is selected
     void on_mediumPenWidthSize_clicked();
-
+    // event that handles when largest pen width button is selected
     void on_largestPenWIdthSize_clicked();
+    // event that handles showing shortcuts
+    void on_pushButton_2_clicked();
+
+    void on_brushButton_clicked();
 
 private:
     Ui::MainWindow *ui;

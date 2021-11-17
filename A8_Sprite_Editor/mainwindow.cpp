@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QMessageBox>
 
 /*!
  * MainWindow class that functions as the view/controller of the sprite editing program. Will handle all things connection
@@ -96,7 +97,7 @@ void MainWindow::closePromptAndOpenEditor(int x)
     startingPrompt.hide();
     emit updateGrid();
     // set mouse tracking of all to true as we want to track where mouse is now
-   setMouseTrackingBool(true);
+    setMouseTrackingBool(true);
 }
 
 /*!
@@ -249,7 +250,7 @@ void MainWindow::on_previewActualSizeButton_toggled(bool checked)
 {
     if(checked){
         ui->previewActualSizeLabel->show();
-            emit showPreview();
+        emit showPreview();
     }
     else {
         ui->previewActualSizeLabel->hide();
@@ -286,5 +287,28 @@ void MainWindow::on_mediumPenWidthSize_clicked()
 void MainWindow::on_largestPenWIdthSize_clicked()
 {
     penSize=3;
+}
+
+/*!
+ * \brief MainWindow::on_pushButton_2_clicked Event handler that shows shortcuts when button is pressed
+ */
+void MainWindow::on_pushButton_2_clicked()
+{
+    QMessageBox msgBox;
+    msgBox.setText("Shortcuts");
+    msgBox.setInformativeText("\ncmd + S \t Save \ncmd + O \t Open \ncmd + Q \t Quit \n"
+                              "E \t Erase \nC \t Color \n\n");
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    // msgBox.setDefaultButton(QMessageBox::Save);
+    msgBox.exec();
+    // QMessageBox::information(this,"Message", "You clicked the button", QMessageBox::Ok, QMessageBox::Cancel);
+}
+
+/*!
+ * \brief MainWindow::on_brushButton_clicked event handles when paint brush is selected, if selected will draw on canvas when told to
+ */
+void MainWindow::on_brushButton_clicked()
+{
+    ui->eraserButton->setChecked(false);
 }
 
