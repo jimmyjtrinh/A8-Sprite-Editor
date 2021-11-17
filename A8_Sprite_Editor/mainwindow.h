@@ -61,18 +61,19 @@ private slots:
     void on_largestPenWIdthSize_clicked();
     // event that handles showing shortcuts
     void on_pushButton_2_clicked();
-
+    // event that handles when brush button is clicked
     void on_brushButton_clicked();
 
     void on_actionSave_As_triggered();
 
     void on_actionOpen_triggered();
+    // event that handles when color preview button is clicked
+    void on_colorPreviewButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     Model modelObj;
     Prompt startingPrompt;
-
     QVBoxLayout* boxLayout;
     QWidget* container;
     QPixmap colorPreview;

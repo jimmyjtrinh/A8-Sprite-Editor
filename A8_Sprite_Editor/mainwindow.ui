@@ -32,19 +32,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>6</x>
-      <y>8</y>
-      <width>113</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -145,27 +132,11 @@
      <string>color</string>
     </property>
    </widget>
-   <widget class="QLabel" name="colorPreview">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>350</y>
-      <width>71</width>
-      <height>64</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Color Preview Here</string>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>540</y>
+      <y>650</y>
       <width>113</width>
       <height>32</height>
      </rect>
@@ -177,7 +148,7 @@
    <widget class="QPushButton" name="mediumPenWidthSize">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>80</x>
       <y>160</y>
       <width>41</width>
       <height>31</height>
@@ -190,7 +161,7 @@
    <widget class="QPushButton" name="largestPenWIdthSize">
     <property name="geometry">
      <rect>
-      <x>110</x>
+      <x>130</x>
       <y>160</y>
       <width>41</width>
       <height>31</height>
@@ -247,7 +218,7 @@
    <widget class="QPushButton" name="addNewFrameButton">
     <property name="geometry">
      <rect>
-      <x>830</x>
+      <x>840</x>
       <y>310</y>
       <width>113</width>
       <height>32</height>
@@ -296,7 +267,7 @@
    <widget class="QSpinBox" name="spinBox">
     <property name="geometry">
      <rect>
-      <x>880</x>
+      <x>879</x>
       <y>220</y>
       <width>42</width>
       <height>22</height>
@@ -306,8 +277,8 @@
    <widget class="QPushButton" name="previewActualSizeButton">
     <property name="geometry">
      <rect>
-      <x>640</x>
-      <y>640</y>
+      <x>639</x>
+      <y>600</y>
       <width>113</width>
       <height>32</height>
      </rect>
@@ -317,6 +288,9 @@
     </property>
     <property name="checkable">
      <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLabel" name="previewActualSizeLabel">
@@ -343,7 +317,7 @@
      <enum>QFrame::NoFrame</enum>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -362,6 +336,19 @@
      <string>brush</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="colorPreviewButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>350</y>
+      <width>91</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -369,7 +356,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>33</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="nativeMenuBar">

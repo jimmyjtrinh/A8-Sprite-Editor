@@ -64,9 +64,7 @@ void MainWindow::initializeMembers(){
     color = QColor(255, 0, 0, 255);
     backupColor = color;
 
-    colorPreview = QPixmap(1,1);
-    colorPreview.fill(color);
-    ui->colorPreview->setPixmap(colorPreview.scaled(ui->colorPreview->width(),ui->colorPreview->height(),Qt::IgnoreAspectRatio));
+    ui->colorPreviewButton->setStyleSheet(QString("background-color: %1").arg(color.name()));
 
     startingPrompt.show();
     this->hide();
@@ -108,15 +106,20 @@ void MainWindow::closePromptAndOpenEditor(int x)
  * \param event
  */
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
-    // relative position of x and y of picture (0 to 255) values
-    relativeXPosOfImage = event->pos().x()-ui->label->x();
-    relativeYPosOfImage = event->pos().y()-ui->label->y() - ui->menubar->height();
+    // do nothing if image is being previewed
+    if(!ui->previewActualSizeButton->isChecked()){
 
-    if (isInCanvas()){
-        if (mouseHasBeenClicked)
-            updateCanvasDrawing();
+        // relative position of x and y of picture (0 to 255) values
+        relativeXPosOfImage = event->pos().x()-ui->label->x();
+        relativeYPosOfImage = event->pos().y()-ui->label->y() - ui->menubar->height();
 
-        emit updateCoords(relativeXPosOfImage, relativeYPosOfImage);}
+        if (isInCanvas()){
+            if (mouseHasBeenClicked)
+                updateCanvasDrawing();
+
+            emit updateCoords(relativeXPosOfImage, relativeYPosOfImage);
+        }
+    }
 }
 
 
@@ -169,10 +172,10 @@ void MainWindow::on_colorButton_clicked()
     {
         // set the selected color if it is
         selectedColor = temp;
+        // update button color that shows color
+        ui->colorPreviewButton->setStyleSheet(QString("background-color: %1").arg(temp.name()));
     }
-    // update color label that displays color
-    colorPreview.fill(selectedColor);
-    ui->colorPreview->setPixmap(colorPreview.scaled(ui->colorPreview->width(),ui->colorPreview->height(),Qt::IgnoreAspectRatio));
+
 }
 
 /*!
@@ -330,5 +333,13 @@ void MainWindow::on_actionOpen_triggered()
     QString openFile = QFileDialog::getOpenFileName(this, tr("Open Sprite"), "", tr("Sprite (*.ssp)"));
 
     emit openName(openFile);
+}
+
+/*!
+ * \brief MainWindow::on_colorPreviewButton_clicked method that shows color dialog when color preview button is pressed
+ */
+void MainWindow::on_colorPreviewButton_clicked()
+{
+    on_colorButton_clicked();
 }
 
