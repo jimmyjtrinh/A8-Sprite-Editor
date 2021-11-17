@@ -46,7 +46,7 @@ private slots:
     // event that handles anytime slider value is changed - sends to model
     void on_speedSlider_valueChanged(int value);
     // event that adds widgets  - model connects to this
-    void addWidgetToScrollBar(QLabel*);
+    void addWidgetToScrollBar(QPixmap);
     // event that handles what to send to model when paint bucket is selected
     void on_paintBucketButton_clicked();
     // event that handles when the preview button is selected
@@ -63,12 +63,14 @@ private slots:
     void on_pushButton_2_clicked();
     // event that handles when brush button is clicked
     void on_brushButton_clicked();
-
+    // event that handles what to do when save is pressed
     void on_actionSave_As_triggered();
-
+    // event that handles what to do and send to model when open is triggered
     void on_actionOpen_triggered();
     // event that handles when color preview button is clicked
     void on_colorPreviewButton_clicked();
+    // takes name of button that is passed in and translates name to number and sends to model
+    void translateButtonNameToNumber();
 
 private:
     Ui::MainWindow *ui;
@@ -84,6 +86,7 @@ private:
     bool paintSelected;
     int spriteDimensions = 32;
     int penSize = 1;
+    QVector<QPushButton*> previewThumbnails;
 
     QColor* currColor;
     QColor selectedColor;
@@ -101,6 +104,8 @@ private:
     void setMouseTrackingBool(bool);
 
 
+
+
 signals:
     // lets model know that grid must be updated
     void updateGrid();
@@ -116,12 +121,17 @@ signals:
     void paintAll(QColor);
     // lets the model know to start showing preview
     void showPreview();
-
+    // lets the model know to clear the current previewed sprite
     void clearSprite();
-
+    // lets the model know user is to save giving this name
     void saveName(QString);
-
+    // lets the model know user is to open given this name
     void openName(QString);
+    // sends the model index of sprite that is wanted to be previewed
+    void sendIndexOfToBePreviewed(int);
+
+
+
 
 
 };

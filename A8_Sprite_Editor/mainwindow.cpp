@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::clearSprite, &modelObj, &Model::clearingSprite);
     connect(this, &MainWindow::saveName, &modelObj, &Model::save);
     connect(this, &MainWindow::openName, &modelObj, &Model::open);
+    connect(this, &MainWindow::sendIndexOfToBePreviewed, &modelObj, &Model::changeSpriteToIndex);
 
 
     //Prompt to View
@@ -211,22 +212,41 @@ void MainWindow::on_speedSlider_valueChanged(int value)
     emit changeFps(value); // let model know you want to changeFps to this (value)
 }
 
+
 /*!
  * \brief MainWindow::addWidgetToScrollBar View is connected to this, when this is invoked will take label and add to scroll area,
  * thus creating a collection of labels in scroll area
  * \param lab
  */
-void MainWindow::addWidgetToScrollBar(QLabel* lab){
-    // set the outlining of label
-    lab->setFrameShape(QFrame::Box);
-    lab->setFixedSize(83,83);
+void MainWindow::addWidgetToScrollBar(QPixmap lab){
+    QPushButton* temp = new QPushButton;
+    temp->setCheckable(false);
+    temp->setObjectName(QString::number(previewThumbnails.length()));
+    previewThumbnails.push_back(temp);
+
+    connect(temp, &QPushButton::pressed, this, &MainWindow::translateButtonNameToNumber);
+
+    QIcon ButtonIcon(lab);
+    temp->setIcon(ButtonIcon);
+    temp->setIconSize(lab.size());
+    temp->setFixedSize(lab.width()+2, lab.height()+10);
+
+
     // add widget to layout
-    boxLayout->addWidget(lab);
+    boxLayout->addWidget(temp);
     container->setLayout(boxLayout);
     // add container holding layout and wigets to scroll area
     ui->allSpriteThumbnails->setWidget(container);
 }
 
+/*!
+ * \brief MainWindow::translateButtonNameToNumber is the slot that is called by all buttons when clicked in scroll area. Will take name of
+ * given button that calls it and parse the name to a number and sends to model to react to this selection made
+ */
+void MainWindow::translateButtonNameToNumber(){
+     QPushButton * button = qobject_cast<QPushButton*>(sender());
+    emit sendIndexOfToBePreviewed(button->objectName().toInt());
+}
 /*!
  * \brief MainWindow::on_paintBucketButton_clicked Defines method that decides how model gets paint bucket request
  */
@@ -291,7 +311,8 @@ void MainWindow::on_mediumPenWidthSize_clicked()
  */
 void MainWindow::on_largestPenWIdthSize_clicked()
 {
-    penSize=3;
+    penSize = 3;
+
 }
 
 /*!

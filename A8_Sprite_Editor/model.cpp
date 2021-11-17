@@ -182,7 +182,7 @@ void Model::setListPreview(){
     QLabel *temp = new QLabel();
     // set the the label of the temp to the image of the most recent preview of the sprite
     temp->setPixmap(QPixmap::fromImage(sprite->getImage().scaled(83, 83, Qt::KeepAspectRatio)));
-    emit sendThumbnailLabel(temp);
+    emit sendThumbnailLabel(QPixmap::fromImage(sprite->getImage().scaled(83, 83, Qt::KeepAspectRatio)));
 }
 
 /*!
@@ -264,5 +264,14 @@ void Model::open(QString fileName)
 
     QJsonObject RootObject = JsonDocument.object();
     read(RootObject);
+}
+
+/*!
+ * \brief Model::changeSpriteToIndex takes given index and sets current sprite to that one in list
+ * \param index index of sprite to change to
+ */
+void Model::changeSpriteToIndex(int index){
+    sprite = sprites[index];
+    updatePixmap();
 }
 

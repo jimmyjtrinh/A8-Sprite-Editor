@@ -51,13 +51,12 @@ public slots:
     void updateAndPaintALl(QColor);
 
     void previewAnimation();
-
     void clearingSprite();
-
     void save(QString);
-
     void open(QString);
 
+    // takes given index and sets current sprite to that one in list
+    void changeSpriteToIndex(int);
 
 
 //internal model slots
@@ -72,7 +71,7 @@ signals:
     // send coords as strings to view for its labels
     void sendCoords(QString);
     // send thumbnails to users
-    void sendThumbnailLabel(QLabel*);
+    void sendThumbnailLabel(QPixmap);
     // send hte animation for previwing at the actual pixel sizes
     void sendPreviewPixmap(QPixmap);
 
