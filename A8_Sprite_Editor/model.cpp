@@ -241,13 +241,19 @@ void Model::write(QJsonObject &json) const
 
 }
 
-void Model::save()
+void Model::save(QString fileName)
 {
+    write(jsonObj);
     QJsonDocument temp(jsonObj);
-    QFile file("C:\\Users\\dayja\\OneDrive\\Desktop\\temp.txt");
+    QFile file(fileName);
 
     file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate);
     file.write(temp.toJson());
     file.close();
+}
+
+void Model::open(QString fileName)
+{
+    QFile file(fileName);
 }
 

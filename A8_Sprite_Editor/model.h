@@ -54,6 +54,11 @@ public slots:
 
     void clearingSprite();
 
+    void save(QString);
+
+    void open(QString);
+
+
 
 //internal model slots
 private slots:
@@ -92,7 +97,6 @@ private:
     // make grid given canvas size
     void makeGrid(int);
 
-    void save();
 
     void write(QJsonObject &json) const;
 

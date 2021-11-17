@@ -9,6 +9,7 @@
 #include "prompt.h"
 #include <QVBoxLayout>
 #include <QLayout>
+#include <QFileDialog>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -63,6 +64,10 @@ private slots:
 
     void on_brushButton_clicked();
 
+    void on_actionSave_As_triggered();
+
+    void on_actionOpen_triggered();
+
 private:
     Ui::MainWindow *ui;
     Model modelObj;
@@ -112,6 +117,10 @@ signals:
     void showPreview();
 
     void clearSprite();
+
+    void saveName(QString);
+
+    void openName(QString);
 
 
 };

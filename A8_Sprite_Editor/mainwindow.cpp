@@ -39,6 +39,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::paintAll, &modelObj, &Model::updateAndPaintALl);
     connect(this, &MainWindow::showPreview, &modelObj, &Model::previewAnimation);
     connect(this, &MainWindow::clearSprite, &modelObj, &Model::clearingSprite);
+    connect(this, &MainWindow::saveName, &modelObj, &Model::save);
+    connect(this, &MainWindow::openName, &modelObj, &Model::open);
 
 
     //Prompt to View
@@ -310,5 +312,20 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_brushButton_clicked()
 {
     ui->eraserButton->setChecked(false);
+}
+
+
+void MainWindow::on_actionSave_As_triggered()
+{
+    QString saveFile = QFileDialog::getSaveFileName(this, tr("Sprite Save As"), "", tr("Sprite (*.ssp)"));
+    emit saveName(saveFile);
+
+}
+
+
+void MainWindow::on_actionOpen_triggered()
+{
+    QString openFile = QFileDialog::getOpenFileName(this, tr("Open Sprite"), "", tr("Sprite (*.ssp)"));
+    emit openName(openFile);
 }
 
