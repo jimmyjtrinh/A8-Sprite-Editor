@@ -25,8 +25,7 @@ public:
 
     QColor getPixel(int x, int y);
 
-    //void read(const QJsonObject &json);
-    //void write(QJsonObject &json) const;
+
 
 private:
     void initializeSprite();

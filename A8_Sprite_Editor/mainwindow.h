@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QLayout>
 #include <QFileDialog>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -73,6 +74,12 @@ private slots:
     void translateButtonNameToNumber();
 
     void updateButtonThumbnail(QPixmap,int);
+
+    void on_actionQuit_triggered();
+
+    void on_actionHelp_triggered();
+
+    void on_actionAbout_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -372,3 +372,22 @@ void MainWindow::updateButtonThumbnail(QPixmap lab, int index){
     temp->setFixedSize(lab.width()+2, lab.height()+10);
 }
 
+
+void MainWindow::on_actionQuit_triggered()
+{
+    QApplication::quit();
+}
+
+
+void MainWindow::on_actionHelp_triggered()
+{
+    QMessageBox::information(this, "Help", "How to use this program.....");
+}
+
+
+void MainWindow::on_actionAbout_triggered()
+{
+    QMessageBox::information(this, "About", "This program is created by Jimmy Trinh, Jacob Day, Amitoj Singh, and Mikey Shin");
+
+}
+

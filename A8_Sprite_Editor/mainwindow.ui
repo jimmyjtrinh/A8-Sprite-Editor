@@ -356,7 +356,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>24</height>
+     <height>33</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
@@ -364,13 +364,15 @@
    </property>
    <widget class="QMenu" name="menuFIle">
     <property name="title">
-     <string>FIle</string>
+     <string>File</string>
     </property>
     <addaction name="actionSave_As"/>
     <addaction name="actionNew_Project"/>
     <addaction name="actionOpen"/>
     <addaction name="actionClose_This"/>
     <addaction name="actionClose_All"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -391,7 +393,6 @@
      <string>Help</string>
     </property>
     <addaction name="actionHelp"/>
-    <addaction name="actionReadMe"/>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFIle"/>
@@ -404,10 +405,8 @@
    <property name="text">
     <string>Help</string>
    </property>
-  </action>
-  <action name="actionReadMe">
-   <property name="text">
-    <string>ReadMe</string>
+   <property name="shortcut">
+    <string>Meta+H</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -431,6 +430,9 @@
   <action name="actionOpen">
    <property name="text">
     <string>Open </string>
+   </property>
+   <property name="shortcut">
+    <string>Meta+O</string>
    </property>
   </action>
   <action name="actionClose_This">
@@ -461,6 +463,14 @@
   <action name="actionPaste">
    <property name="text">
     <string>Paste</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Meta+Q</string>
    </property>
   </action>
  </widget>
