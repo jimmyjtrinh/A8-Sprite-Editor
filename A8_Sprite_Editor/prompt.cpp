@@ -31,7 +31,6 @@ Prompt::~Prompt()
  */
 void Prompt::on_pushButton_clicked()
 {
-    cout << ui->comboBox->itemText(ui->comboBox->currentIndex()).toInt() << endl;
     emit startApp(ui->comboBox->itemText(ui->comboBox->currentIndex()).toInt());
 }
 

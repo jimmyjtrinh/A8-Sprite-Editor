@@ -240,6 +240,9 @@ void Model::write(QJsonObject &json) const
 
 
 }
+void Model::read(QJsonObject &json){
+    cout<< "we are reading rainbow"<< endl;
+}
 
 void Model::save(QString fileName)
 {
@@ -254,6 +257,12 @@ void Model::save(QString fileName)
 
 void Model::open(QString fileName)
 {
-    QFile file(fileName);
+    QFile jsonFile(fileName);
+    jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    QJsonDocument JsonDocument = QJsonDocument::fromJson(jsonFile.readAll());
+    jsonFile.close();
+
+    QJsonObject RootObject = JsonDocument.object();
+    read(RootObject);
 }
 

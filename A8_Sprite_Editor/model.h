@@ -99,6 +99,7 @@ private:
 
 
     void write(QJsonObject &json) const;
+    void read(QJsonObject &json) ;
 
 
     QJsonObject jsonObj;

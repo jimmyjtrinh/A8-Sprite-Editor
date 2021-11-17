@@ -315,6 +315,8 @@ void MainWindow::on_brushButton_clicked()
 }
 
 
+//need to make case for when user hits cancel..............................
+
 void MainWindow::on_actionSave_As_triggered()
 {
     QString saveFile = QFileDialog::getSaveFileName(this, tr("Sprite Save As"), "", tr("Sprite (*.ssp)"));
@@ -326,6 +328,7 @@ void MainWindow::on_actionSave_As_triggered()
 void MainWindow::on_actionOpen_triggered()
 {
     QString openFile = QFileDialog::getOpenFileName(this, tr("Open Sprite"), "", tr("Sprite (*.ssp)"));
+
     emit openName(openFile);
 }
 
