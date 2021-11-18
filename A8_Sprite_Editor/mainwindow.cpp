@@ -359,23 +359,22 @@ void MainWindow::on_brushButton_clicked()
 void MainWindow::on_actionSave_As_triggered()
 {
     QString saveFile = QFileDialog::getSaveFileName(this, tr("Sprite Save As"), "", tr("Sprite (*.ssp)"));
-    emit saveName(saveFile);
-
+    if(!saveFile.isEmpty()){
+        emit saveName(saveFile);
+    }
 }
 
 
 void MainWindow::on_actionOpen_triggered()
 {
-
     QString openFile = QFileDialog::getOpenFileName(this, tr("Open Sprite"), "", tr("Sprite (*.ssp)"));
+    if(!openFile.isEmpty()){
+        boxLayout =  new QVBoxLayout();
+          container = new QWidget();
+        previewThumbnails.clear();
 
-    boxLayout =  new QVBoxLayout();
-      container = new QWidget();
-    previewThumbnails.clear();
-
-    emit openName(openFile);
-
-
+        emit openName(openFile);
+    }
 }
 
 /*!
@@ -421,3 +420,10 @@ void MainWindow::on_paintBucketButton_toggled(bool checked)
         ui->eraserButton->setChecked(false);
     isPainting = checked;
 }
+
+void MainWindow::on_actionNew_Project_triggered()
+{
+   MainWindow w2 = new MainWindow;
+   w2.show();
+}
+

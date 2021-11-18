@@ -83,6 +83,8 @@ private slots:
 
     void on_paintBucketButton_toggled(bool checked);
 
+    void on_actionNew_Project_triggered();
+
 private:
     Ui::MainWindow *ui;
     Model modelObj;
