@@ -368,8 +368,8 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>-10</y>
-      <width>521</width>
+      <y>0</y>
+      <width>581</width>
       <height>61</height>
      </rect>
     </property>
@@ -392,7 +392,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
@@ -424,7 +424,7 @@
     <string>Help</string>
    </property>
    <property name="shortcut">
-    <string>Meta+H</string>
+    <string>Ctrl+H</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -437,12 +437,15 @@
     <string>Save As</string>
    </property>
    <property name="shortcut">
-    <string>Meta+S</string>
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionNew_Project">
    <property name="text">
     <string>New Project</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="actionOpen">
@@ -450,7 +453,7 @@
     <string>Open </string>
    </property>
    <property name="shortcut">
-    <string>Meta+O</string>
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionQuit">
@@ -458,7 +461,7 @@
     <string>Quit</string>
    </property>
    <property name="shortcut">
-    <string>Meta+Q</string>
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>
