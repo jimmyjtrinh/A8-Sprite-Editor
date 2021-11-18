@@ -276,6 +276,12 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>24</number>
+    </property>
    </widget>
    <widget class="QPushButton" name="previewActualSizeButton">
     <property name="geometry">

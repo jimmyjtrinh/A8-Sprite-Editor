@@ -89,7 +89,7 @@ void Model::updateSprite(double x, double y, QColor color, int thickness)
             int currentXPixel = xInPixelSpace+xDependingOnThick;
             int currentYPixel = yInPixelSpace+yDependingOnThick;
             // check that pixel drawn is not out range
-            if(currentXPixel<spriteDimensions && currentYPixel<spriteDimensions)
+            if(currentYPixel >= 0 && currentXPixel >= 0 && currentXPixel<spriteDimensions && currentYPixel<spriteDimensions)
                 sprite->setPixel(currentXPixel,currentYPixel,color);
         }
 
