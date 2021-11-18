@@ -217,10 +217,11 @@ void MainWindow::on_speedSlider_valueChanged(int value)
  * thus creating a collection of labels in scroll area
  * \param lab
  */
-void MainWindow::addWidgetToScrollBar(QPixmap lab){
+void MainWindow::addWidgetToScrollBar(QPixmap lab, int i){
+    cout<<i<<endl;
     QPushButton* temp = new QPushButton;
     temp->setCheckable(false);
-    temp->setObjectName(QString::number(previewThumbnails.length()));
+    temp->setObjectName(QString::number(i));
     previewThumbnails.push_back(temp);
 
     connect(temp, &QPushButton::pressed, this, &MainWindow::translateButtonNameToNumber);
@@ -350,9 +351,16 @@ void MainWindow::on_actionSave_As_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
+
     QString openFile = QFileDialog::getOpenFileName(this, tr("Open Sprite"), "", tr("Sprite (*.ssp)"));
 
+    boxLayout =  new QVBoxLayout();
+      container = new QWidget();
+    previewThumbnails.clear();
+
     emit openName(openFile);
+
+
 }
 
 /*!

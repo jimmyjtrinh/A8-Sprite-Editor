@@ -47,7 +47,7 @@ private slots:
     // event that handles anytime slider value is changed - sends to model
     void on_speedSlider_valueChanged(int value);
     // event that adds widgets  - model connects to this
-    void addWidgetToScrollBar(QPixmap);
+    void addWidgetToScrollBar(QPixmap, int);
     // event that handles what to send to model when paint bucket is selected
     void on_paintBucketButton_clicked();
     // event that handles when the preview button is selected

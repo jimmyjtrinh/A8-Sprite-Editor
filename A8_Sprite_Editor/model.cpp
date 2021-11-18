@@ -120,11 +120,9 @@ void Model::getCoords(double x, double y){
  * \param canvasSize size of the canvas/preview drawing of sprite
  */
 void Model::makeGrid(int canvasSize){
-    cout << "in make grid" << endl;
     QPixmap pixmap(QPixmap::fromImage(sprite->getImage()).scaled(canvasSize, canvasSize, Qt::KeepAspectRatio));
     QPainter painter(&pixmap);
 
-    cout << "after making pixmap" << endl;
     painter.setPen(QColor(0, 0, 0, 200));
 
     //vertical lines
@@ -191,7 +189,7 @@ void Model::setListPreview(){
     QLabel *temp = new QLabel();
     // set the the label of the temp to the image of the most recent preview of the sprite
     temp->setPixmap(QPixmap::fromImage(sprite->getImage().scaled(83, 83, Qt::KeepAspectRatio)));
-    emit sendThumbnailLabel(QPixmap::fromImage(sprite->getImage().scaled(83, 83, Qt::KeepAspectRatio)));
+    emit sendThumbnailLabel(QPixmap::fromImage(sprite->getImage().scaled(83, 83, Qt::KeepAspectRatio)), currentIndexOfSprites);
 }
 
 /*!
@@ -293,7 +291,7 @@ void Model::read(QJsonObject &json){
     for(int i = 0; i < frames; i ++)
     {
         QJsonArray currentFrame = test[QString("frame%1").arg(i)].toArray();
-        Sprite* newSprite = new Sprite(height);
+        sprite = new Sprite(height);
         for(int row = 0; row < height; row++){
             QJsonArray rowArray = currentFrame.at(row).toArray();
             for(int col = 0; col < width; col++){
@@ -302,27 +300,21 @@ void Model::read(QJsonObject &json){
                 int blue = colorArray[1].toInt();
                 int green = colorArray[2].toInt();
                 int alpha = colorArray[3].toInt();
-                newSprite->setPixel(row, col, QColor(red,blue,green,alpha));
+                sprite->setPixel(row, col, QColor(red,blue,green,alpha));
             }
         }
-        sprites.push_back(newSprite);
+        sprites.push_back(sprite);
+        if(i!=0)
+        emit sendThumbnailLabel(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), i);
+
     }
-    cout << sprites.length() << endl;
     sprite = sprites[0];
-    cout << "sprite->getPixel(0,0).red()" << endl;
+    currentIndexOfSprites = 0;
 
+    emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
+    timer->start(1000/fps);
     updatePixmap();
-    timer->start(1000);
 
-
-    // PSEUDO CODE
-    // Need to make actual code that can go through array.
-    // Might need to go through QPixMap's matrix and assign each pixel an element from the "frames" array.
-    //        for (int i = 0; i < frames; i++){
-    //            cout << "frame" + QString::number(i).toStdString()<< endl;
-    //            if (json.contains("frame"))
-    //                cout << "frame is in the json: " << endl;
-    //        }
 }
 
 void Model::save(QString fileName)

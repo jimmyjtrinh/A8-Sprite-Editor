@@ -71,7 +71,7 @@ signals:
     // send coords as strings to view for its labels
     void sendCoords(QString);
     // send thumbnails to users
-    void sendThumbnailLabel(QPixmap);
+    void sendThumbnailLabel(QPixmap, int );
     // send the animation for previwing at the actual pixel sizes
     void sendPreviewPixmap(QPixmap);
     // sends the current sprite to the thumbnail to see changes in real time
