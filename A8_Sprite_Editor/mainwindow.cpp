@@ -135,7 +135,10 @@ void MainWindow::updateCanvasDrawing(){
 
     if(isPainting)
     {
-        emit paintBucket(relativeXPosOfImage, relativeYPosOfImage, *currColor);
+        if(canPaint){
+            canPaint = false;
+            emit paintBucket(relativeXPosOfImage, relativeYPosOfImage, *currColor);
+        }
     }
     else
     {
@@ -170,6 +173,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
  */
 void MainWindow::mouseReleaseEvent(QMouseEvent *event){
     mouseHasBeenClicked = false;
+    canPaint = true;
 }
 
 /*!

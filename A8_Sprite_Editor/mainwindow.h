@@ -117,6 +117,7 @@ private:
     bool isPainting = false;
     // checks if mouse location is on top of canvas
     bool isInCanvas();
+    bool canPaint = true;
     // method wraps all signals that would update canvas
     void updateCanvasDrawing();
     // method initializes all members to what they need to be
