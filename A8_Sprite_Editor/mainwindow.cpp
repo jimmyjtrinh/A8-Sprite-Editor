@@ -135,13 +135,12 @@ void MainWindow::updateCanvasDrawing(){
 
     if(isPainting)
     {
-        emit(paintBucket(relativeXPosOfImage, relativeYPosOfImage, *currColor));
+        emit paintBucket(relativeXPosOfImage, relativeYPosOfImage, *currColor);
     }
     else
     {
         emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, *currColor, penSize);
     }
-//    emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, *currColor, penSize);
     emit updateGrid();
 }
 
@@ -210,7 +209,6 @@ void MainWindow::on_eraserButton_toggled(bool checked)
     {
         ui->paintBucketButton->setChecked(false);
     }
-
 }
 
 /*!
@@ -355,6 +353,7 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_brushButton_clicked()
 {
     ui->eraserButton->setChecked(false);
+    ui->paintBucketButton->setChecked(false);
 }
 
 /*!

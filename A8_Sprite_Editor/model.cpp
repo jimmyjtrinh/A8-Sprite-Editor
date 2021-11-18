@@ -367,6 +367,6 @@ void Model::paintSprite(int x, int y, const QColor& color)
 {
     int xInPixelSpace =  x*scale;
     int yInPixelSpace =  y*scale;
-    sprite->paintBucket(xInPixelSpace, yInPixelSpace, color);
+    sprite->paintBucket(xInPixelSpace, yInPixelSpace, color, sprite->getPixel(xInPixelSpace, yInPixelSpace));
     emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
 }

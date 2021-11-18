@@ -30,7 +30,7 @@ public:
     QColor getPixel(int x, int y);
 
     // method does paint bucket on pixel
-    void paintBucket(int, int, const QColor&);
+    void paintBucket(int, int, const QColor&, const QColor&);
     // set pixel
     void setPixel(int x, int y, const QColor& color);
 
