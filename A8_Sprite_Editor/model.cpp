@@ -252,19 +252,16 @@ void Model::write(QJsonObject &json) const
 void Model::read(QJsonObject &json){
     timer->stop();
     currentAnimatedSpriteIndex = 0;
-    cout<< "we are reading rainbow"<< endl;
     int height = -1;
     int width = -1;
     int frames = -1;
     QJsonObject test;
     if (json.contains("height") && json["height"].isDouble()){
         height = json["height"].toInt();
-        cout << "height is: "<< height << endl;
     }
 
     if (json.contains("width") && json["width"].isDouble()){
         width = json["width"].toInt();
-        cout << "width is: "<< width << endl;
     }
 
     if (height != width){
@@ -273,7 +270,6 @@ void Model::read(QJsonObject &json){
 
     if (json.contains("numberOfFrames") && json["numberOfFrames"].isDouble()){
         frames = json["numberOfFrames"].toInt();
-        cout << "frames is: "<< frames << endl;
     }
 
     if(json.contains("frames"))

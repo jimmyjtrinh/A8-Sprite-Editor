@@ -93,7 +93,6 @@ private:
     double relativeXPosOfImage;
     double relativeYPosOfImage;
     bool paintSelected;
-    int spriteDimensions = 32;
     int penSize = 1;
     QVector<QPushButton*> previewThumbnails;
 
