@@ -1,7 +1,7 @@
 /*
- * Jimmy Trinh && Jacob Day
+ * Jimmy Trinh && Jacob Day && Amitoj Singh && Michael Shin
  * Software Practice II, CS 3505
- * A6: Qt Simon Game
+ * A8: Qt Sprite Editor
  */
 #ifndef MODEL_H
 #define MODEL_H
@@ -19,8 +19,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QFile>
-
-using std::rand;
 
 /*!
  * \brief The Model class Model of sprite editing program. Handles what to do when creating an istance of the program. Handles
@@ -51,7 +49,7 @@ public slots:
     void updateAndPaintALl(QColor);
 
     void previewAnimation();
-    void clearingSprite();
+    void clearCurrentSprite();
     void save(QString);
     void open(QString);
 
@@ -78,6 +76,8 @@ signals:
     void sendPreviewPixmap(QPixmap);
     // sends the current sprite to the thumbnail to see changes in real time
     void updateCurrentSpriteThumbnail(QPixmap, int);
+
+    void errorWhenParsingJsonFile();
 
 
 private:

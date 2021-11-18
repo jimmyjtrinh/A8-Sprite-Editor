@@ -1,11 +1,15 @@
+/*
+ * Jimmy Trinh && Jacob Day && Amitoj Singh && Michael Shin
+ * Software Practice II, CS 3505
+ * A8: Qt Sprite Editor
+ */
 #include "prompt.h"
 #include "ui_prompt.h"
-#include <iostream>
 /*!
  * Class responsible for sprite dimension acquiring. Class for initial prompt of sprite editing program.
  * Handles sending given user inputs to model to decipher.
  */
-using namespace std;
+
 /*!
  * \brief Prompt::Prompt constructs prompt widget.
  * \param parent

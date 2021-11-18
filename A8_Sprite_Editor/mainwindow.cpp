@@ -1,7 +1,10 @@
+/*
+ * Jimmy Trinh && Jacob Day && Amitoj Singh && Michael Shin
+ * Software Practice II, CS 3505
+ * A8: Qt Sprite Editor
+ */
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <iostream>
-#include <QDebug>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QMessageBox>
@@ -10,7 +13,7 @@
  * MainWindow class that functions as the view/controller of the sprite editing program. Will handle all things connection
  * and view. Gui component of sprite editing program
  */
-using namespace std;
+
 /*!
  * \brief MainWindow::MainWindow Constructor initializes members and sets up connections for view
  * \param parent
@@ -29,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&modelObj, &Model::sendThumbnailLabel, this, &MainWindow::addWidgetToScrollBar);
     connect(&modelObj, &Model::sendPreviewPixmap, ui->previewActualSizeLabel, &QLabel::setPixmap);
     connect(&modelObj, &Model::updateCurrentSpriteThumbnail, this, &MainWindow::updateButtonThumbnail);
+    connect(&modelObj, &Model::errorWhenParsingJsonFile, this, &MainWindow::handleJsonError);
 
 
     //View to Model
@@ -39,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::changeFps, &modelObj, &Model::setFps);
     connect(this, &MainWindow::paintAll, &modelObj, &Model::updateAndPaintALl);
     connect(this, &MainWindow::showPreview, &modelObj, &Model::previewAnimation);
-    connect(this, &MainWindow::clearSprite, &modelObj, &Model::clearingSprite);
+    connect(this, &MainWindow::clearSprite, &modelObj, &Model::clearCurrentSprite);
     connect(this, &MainWindow::saveName, &modelObj, &Model::save);
     connect(this, &MainWindow::openName, &modelObj, &Model::open);
     connect(this, &MainWindow::sendIndexOfToBePreviewed, &modelObj, &Model::changeSpriteToIndex);
@@ -233,7 +237,6 @@ void MainWindow::on_speedSlider_valueChanged(int value)
  * \param lab
  */
 void MainWindow::addWidgetToScrollBar(QPixmap lab, int i){
-    cout<<i<<endl;
     QPushButton* temp = new QPushButton;
     temp->setCheckable(false);
     temp->setObjectName(QString::number(i));
@@ -353,28 +356,40 @@ void MainWindow::on_brushButton_clicked()
     ui->eraserButton->setChecked(false);
 }
 
-
-//need to make case for when user hits cancel..............................
-
+/*!
+ * \brief MainWindow::on_actionSave_As_triggered method invoked when save as is clicked. Saves sprite frames by taking
+ * input string and emitting to model
+ */
 void MainWindow::on_actionSave_As_triggered()
 {
     QString saveFile = QFileDialog::getSaveFileName(this, tr("Sprite Save As"), "", tr("Sprite (*.ssp)"));
     if(!saveFile.isEmpty()){
         emit saveName(saveFile);
     }
+
 }
 
-
+/*!
+ * \brief MainWindow::on_actionSave_As_triggered method invoked when open as is clicked. Opens sprite by taking
+ * input string and emitting to model
+ */
 void MainWindow::on_actionOpen_triggered()
 {
     QString openFile = QFileDialog::getOpenFileName(this, tr("Open Sprite"), "", tr("Sprite (*.ssp)"));
     if(!openFile.isEmpty()){
         boxLayout =  new QVBoxLayout();
           container = new QWidget();
-        previewThumbnails.clear();
+       // previewThumbnails.clear();
 
         emit openName(openFile);
     }
+}
+
+/*!
+ * \brief MainWindow::handleJsonError This is ran when there is an error while reading the Json file
+ */
+void MainWindow::handleJsonError(){
+    QMessageBox::information(this, "Parsing Error", "There is an error with the input Json file. Canvas size must have height match width");
 }
 
 /*!
@@ -385,6 +400,11 @@ void MainWindow::on_colorPreviewButton_clicked()
     on_colorButton_clicked();
 }
 
+/*!
+ * \brief MainWindow::updateButtonThumbnail Takes index'd button in scroll area and changes picture of button to index
+ * \param lab image of button to change to
+ * \param index index of button that is being chenged
+ */
 void MainWindow::updateButtonThumbnail(QPixmap lab, int index){
     QPushButton* temp = previewThumbnails[index];
 
@@ -394,26 +414,35 @@ void MainWindow::updateButtonThumbnail(QPixmap lab, int index){
     temp->setFixedSize(lab.width()+2, lab.height()+10);
 }
 
-
+/*!
+ * \brief MainWindow::on_actionQuit_triggered Quits application
+ */
 void MainWindow::on_actionQuit_triggered()
 {
     QApplication::quit();
 }
 
-
+/*!
+ * \brief MainWindow::on_actionHelp_triggered method that invokes help message box
+ */
 void MainWindow::on_actionHelp_triggered()
 {
     QMessageBox::information(this, "Help", "How to use this program.....");
 }
 
-
+/*!
+ * \brief MainWindow::on_actionAbout_triggered method that invokes about screen
+ */
 void MainWindow::on_actionAbout_triggered()
 {
     QMessageBox::information(this, "About", "This program is created by Jimmy Trinh, Jacob Day, Amitoj Singh, and Mikey Shin");
 
 }
 
-
+/*!
+ * \brief MainWindow::on_paintBucketButton_toggled method
+ * \param checked
+ */
 void MainWindow::on_paintBucketButton_toggled(bool checked)
 {
     if(ui->eraserButton->isChecked() && checked)
@@ -421,6 +450,9 @@ void MainWindow::on_paintBucketButton_toggled(bool checked)
     isPainting = checked;
 }
 
+/*!
+ * \brief MainWindow::on_actionNew_Project_triggered creates a new instance of a editor
+ */
 void MainWindow::on_actionNew_Project_triggered()
 {
    MainWindow w2 = new MainWindow;

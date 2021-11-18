@@ -1,3 +1,8 @@
+/*
+ * Jimmy Trinh && Jacob Day && Amitoj Singh && Michael Shin
+ * Software Practice II, CS 3505
+ * A8: Qt Sprite Editor
+ */
 #ifndef SPRITE_H
 #define SPRITE_H
 

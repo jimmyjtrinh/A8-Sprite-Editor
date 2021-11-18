@@ -1,16 +1,15 @@
 /*
- * Jimmy Trinh && Jacob Day
+ * Jimmy Trinh && Jacob Day && Amitoj Singh && Michael Shin
  * Software Practice II, CS 3505
- * A6: Qt Simon Game
+ * A8: Qt Sprite Editor
  */
 #include "model.h"
-#include <iostream>
 
 /*!
  * Model of sprite editing program. Handles what to do when creating an istance of the program. Handles
  * data inputs from controller and deciphers how to use data.
  */
-using namespace std;
+
 /**
  * @brief Model::Model Constructor for our model class
  * @param parent
@@ -19,7 +18,7 @@ Model::Model(QObject *parent) : QObject(parent)
 {
     fps = 1;
 
-    timer = new QTimer(this); // asldkfjasldfkjasldfkjasldfkjsd
+    timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Model::runAnimation);
     timer->start(1000);
 }
@@ -54,8 +53,6 @@ void Model::getDimensions(int dim)
     sprites.push_back(sprite);
 
     setListPreview();
-    //calls JSON write method.
-    //    write(jsonObj);
 }
 
 /*!
@@ -114,7 +111,6 @@ void Model::getCoords(double x, double y){
     emit sendCoords("x: "+QString::number(xInPixelSpace) + "  y: " + (QString::number(yInPixelSpace)));
 }
 
-
 /*!
  * \brief Model::makeGrid makes the grid for the sprite drawing.
  * \param canvasSize size of the canvas/preview drawing of sprite
@@ -137,7 +133,6 @@ void Model::makeGrid(int canvasSize){
 
     // send grid to view to draw
     emit sendGrid(pixmap);
-
 }
 
 /*!
@@ -156,7 +151,6 @@ void Model::setFps(int updatedFps){
 void Model::runAnimation(){
     previewAnimation();
     sendIndexedSprite();
-
 }
 
 /*!
@@ -201,10 +195,12 @@ void Model::setListPreview(){
 void Model::updateAndPaintALl(QColor selected){
     sprite->currSprite.fill(selected);
     emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
-
 }
 
-void Model::clearingSprite(){
+/*!
+ * \brief Model::clearCurrentSprite Takes current sprite being previewed and sets the sprite to be blank
+ */
+void Model::clearCurrentSprite(){
     QColor blank(0,0,0,0);
     sprite->currSprite.fill(blank);
     emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
@@ -212,6 +208,10 @@ void Model::clearingSprite(){
     updatePixmap();
 }
 
+/*!
+ * \brief Model::write MEthod writes to QJson object and allows for saving to files
+ * \param json json object being written to
+ */
 void Model::write(QJsonObject &json) const
 {
     int currIndex = 0;
@@ -228,10 +228,10 @@ void Model::write(QJsonObject &json) const
             for(int i = 0; i < spriteDimensions; i ++)
             {
                 QJsonArray colors;
-                colors.append(sprites[currIndex]->getPixel(j, i).red());
-                colors.append(sprites[currIndex]->getPixel(j, i).green());
-                colors.append(sprites[currIndex]->getPixel(j, i).blue());
-                colors.append(sprites[currIndex]->getPixel(j, i).alpha());
+                colors.append(s->getPixel(j, i).red());
+                colors.append(s->getPixel(j, i).green());
+                colors.append(s->getPixel(j, i).blue());
+                colors.append(s->getPixel(j, i).alpha());
                 currRow.append(colors);
             }
             currSprite.append(currRow);
@@ -239,20 +239,16 @@ void Model::write(QJsonObject &json) const
         allSprites.insert(QString("frame%1").arg(currIndex), currSprite);
 
         currIndex++;
-
     }
     json["frames"] = allSprites;
-    //    QJsonDocument temp(json);
-    //    QFile file("C:\\Users\\dayja\\OneDrive\\Desktop\\temp.txt");
-    //    file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate);
-    //    file.write(temp.toJson());
-    //    file.close();
-
-
 }
+
+/*!
+ * \brief Model::read MEthod reads sprite information from json object. Used to load sprite frames
+ * \param json json being read from
+ */
 void Model::read(QJsonObject &json){
     timer->stop();
-    currentAnimatedSpriteIndex = 0;
     int height = -1;
     int width = -1;
     int frames = -1;
@@ -266,6 +262,9 @@ void Model::read(QJsonObject &json){
     }
 
     if (height != width){
+        emit errorWhenParsingJsonFile();
+        timer->start(1000/fps);
+
         return; // error message
     }
 
@@ -279,6 +278,7 @@ void Model::read(QJsonObject &json){
     }
 
 
+    currentAnimatedSpriteIndex = 0;
 
     this->getDimensions(height);
 
@@ -311,9 +311,12 @@ void Model::read(QJsonObject &json){
     emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
     timer->start(1000/fps);
     updatePixmap();
-
 }
 
+/*!
+ * \brief Model::save method takes json that is written to and writes all json into a file
+ * \param fileName name of file being written to
+ */
 void Model::save(QString fileName)
 {
     write(jsonObj);
@@ -325,6 +328,10 @@ void Model::save(QString fileName)
     file.close();
 }
 
+/*!
+ * \brief Model::open method that takes filename and reads all necessary data from it to create a new state in sprites
+ * \param fileName file being read from
+ */
 void Model::open(QString fileName)
 {
     // NEED prompt for saving before opening a new sprite file
@@ -347,6 +354,13 @@ void Model::changeSpriteToIndex(int index){
     updatePixmap();
 }
 
+/*!
+ * \brief Model::paintSprite paint bucket's sprite at given relative x and y location of canvas widget. Translates
+ * x and y to pixel space coords and modifies sprite to paint where is selected
+ * \param x canvas-relative (0-513) x value
+ * \param y canvas-relative (0-513) y value
+ * \param color color being painted
+ */
 void Model::paintSprite(int x, int y, const QColor& color)
 {
     int xInPixelSpace =  x*scale;

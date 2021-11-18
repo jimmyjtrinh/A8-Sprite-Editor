@@ -1,9 +1,12 @@
+/*
+ * Jimmy Trinh && Jacob Day && Amitoj Singh && Michael Shin
+ * Software Practice II, CS 3505
+ * A8: Qt Sprite Editor
+ */
 #include "sprite.h"
-#include <iostream>
 /*!
  *Class representing all sprite objects in sprite editing program
  */
-using namespace std;
 
 /*!
  * \brief Sprite::Sprite constructs sprite and initializes all mebers of a sprite with size 32
@@ -37,6 +40,7 @@ void Sprite::initializeSprite()
     QColor blank(0,0,0,0);
     currSprite.fill(blank);
 }
+
 /*!
  * \brief Sprite::~Sprite destructor
  */
@@ -76,11 +80,23 @@ QImage Sprite::getImage()
     return currSprite;
 }
 
+/*!
+ * \brief Sprite::getPixel gets color at given pixel
+ * \param x x location of acquired pixel
+ * \param y y location of acquired pixel
+ * \return color at location
+ */
 QColor Sprite::getPixel(int x, int y)
 {
     return currSprite.pixelColor(x, y);
 }
 
+/*!
+ * \brief Sprite::paintBucket method takes x and y and paints color at given x and y using bfs
+ * \param x x location of sprite to paint
+ * \param y y location of sprite to paint
+ * \param color color being painted to
+ */
 void Sprite::paintBucket(int x, int y, const QColor &color)
 {
     if(x < 0 || y < 0 || x >= currSprite.width() || y >= currSprite.height())
@@ -99,4 +115,3 @@ void Sprite::paintBucket(int x, int y, const QColor &color)
     this->paintBucket(x, y-1, color);
     this->paintBucket(x, y+1, color);
 }
-

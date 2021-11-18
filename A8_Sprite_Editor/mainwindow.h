@@ -1,3 +1,8 @@
+/*
+ * Jimmy Trinh && Jacob Day && Amitoj Singh && Michael Shin
+ * Software Practice II, CS 3505
+ * A8: Qt Sprite Editor
+ */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -84,6 +89,8 @@ private slots:
     void on_paintBucketButton_toggled(bool checked);
 
     void on_actionNew_Project_triggered();
+
+    void handleJsonError();
 
 private:
     Ui::MainWindow *ui;
