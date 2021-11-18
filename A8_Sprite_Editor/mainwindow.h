@@ -123,9 +123,6 @@ private:
     // sets all things in gui to be setmousetracking(bool)
     void setMouseTrackingBool(bool);
 
-
-
-
 signals:
     // lets model know that grid must be updated
     void updateGrid();

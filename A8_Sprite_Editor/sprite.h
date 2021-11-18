@@ -34,8 +34,6 @@ public:
     // set pixel
     void setPixel(int x, int y, const QColor& color);
 
-
-
 private:
     void initializeSprite();
 };

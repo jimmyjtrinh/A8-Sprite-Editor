@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //Prompt to View
-    connect(&startingPrompt, &Prompt::startApp, &modelObj, &Model::getDimensions);
+    connect(&startingPrompt, &Prompt::startApp, &modelObj, &Model::getDimensionsAndInitializeFirstSprite);
     connect(&startingPrompt, &Prompt::startApp, this, &MainWindow::closePromptAndOpenEditor);
 
     initializeMembers();
@@ -114,10 +114,10 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
     // do nothing if image is being previewed
     if(!ui->previewActualSizeButton->isChecked()){
 
-        // relative position of x and y of picture (0 to 255) values
+        // relative position of x and y of picture (0 to 513) values
         relativeXPosOfImage = event->pos().x()-ui->label->x();
         relativeYPosOfImage = event->pos().y()-ui->label->y() - ui->menubar->height();
-
+        // if in canvas and mouse hovered or click let view know
         if (isInCanvas()){
             if (mouseHasBeenClicked)
                 updateCanvasDrawing();
@@ -160,6 +160,7 @@ bool MainWindow::isInCanvas(){
  * \param event
  */
 void MainWindow::mousePressEvent(QMouseEvent *event){
+    // if you are in canvas and you click, update the sprite to reflect it by calling updateCanvasDrawing
     if (isInCanvas()){
         updateCanvasDrawing();
     }
@@ -191,6 +192,7 @@ void MainWindow::on_colorButton_clicked()
         // update button color that shows color
         ui->colorPreviewButton->setStyleSheet(QString("background-color: %1").arg(temp.name()));
     }
+    // if this button is clicked uncheck eraser button
     if(ui->eraserButton->isChecked())
         ui->eraserButton->click();
 }
@@ -203,16 +205,14 @@ void MainWindow::on_colorButton_clicked()
 void MainWindow::on_eraserButton_toggled(bool checked)
 {
 
-    if (checked){
+    if (checked)
         currColor = &ERASER; // if button checked, make the color that draws the "eraser" color
-    } else {
+    else
         // not checked thus eraser button is not active anymore, leave currColor to be the color selected b4 in dialog
         currColor = &selectedColor;
-    }
+    // untogle paint button if this is checked and so is that
     if(ui->paintBucketButton->isChecked() && checked)
-    {
         ui->paintBucketButton->setChecked(false);
-    }
 }
 
 /*!
@@ -265,7 +265,7 @@ void MainWindow::addWidgetToScrollBar(QPixmap lab, int i){
  * given button that calls it and parse the name to a number and sends to model to react to this selection made
  */
 void MainWindow::translateButtonNameToNumber(){
-     QPushButton * button = qobject_cast<QPushButton*>(sender());
+    QPushButton * button = qobject_cast<QPushButton*>(sender());
     emit sendIndexOfToBePreviewed(button->objectName().toInt());
 }
 
@@ -379,15 +379,15 @@ void MainWindow::on_actionOpen_triggered()
 
 void MainWindow::clearThumbnailList()
 {
-   boxLayout =  new QVBoxLayout();
-   container = new QWidget();
-   previewThumbnails.clear();
+    boxLayout =  new QVBoxLayout();
+    container = new QWidget();
+    previewThumbnails.clear();
 }
 
 /*!
  * \brief MainWindow::handleJsonError This is ran when there is an error while reading the Json file
  */
-void MainWindow::handleJsonError(){
+void MainWindow:: handleJsonError(){
     QMessageBox::information(this, "Parsing Error", "There is an error with the input Json file. Canvas size must have height match width");
 }
 
@@ -454,7 +454,8 @@ void MainWindow::on_paintBucketButton_toggled(bool checked)
  */
 void MainWindow::on_actionNew_Project_triggered()
 {
-   MainWindow w2 = new MainWindow;
-   w2.show();
+    MainWindow w2 = new MainWindow;
+    w2.show();
 }
+
 

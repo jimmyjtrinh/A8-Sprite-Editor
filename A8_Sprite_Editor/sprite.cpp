@@ -99,16 +99,19 @@ QColor Sprite::getPixel(int x, int y)
  */
 void Sprite::paintBucket(int x, int y, const QColor &color, const QColor &startColor)
 {
+    // check any sprite painting is being done in bounds of sprite
     if(x < 0 || y < 0 || x >= currSprite.width() || y >= currSprite.height())
     {
         return;
     }
 
+    // check if current pixel is the color we're changing to, if so, stop
     if(currSprite.pixelColor(x,y) != startColor)
     {
         return;
     }
 
+    // recur on all pixels surrounding current
     currSprite.setPixelColor(x,y,color);
     this->paintBucket(x-1, y, color, startColor);
     this->paintBucket(x+1, y, color, startColor);

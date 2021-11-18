@@ -17,7 +17,6 @@
 Model::Model(QObject *parent) : QObject(parent)
 {
     fps = 1;
-
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Model::runAnimation);
     timer->start(1000);
@@ -32,28 +31,25 @@ void Model::createNewSprite(){
     sprites.push_back(temp);
     sprite = temp;
     currentIndexOfSprites = sprites.length()-1;
+    // change preview label to reflect new main sprite
     updatePixmap();
     // call method that will handle thumbnail previews
     setListPreview();
 }
 
 /*!
- * \brief Model::getDimensions slot method decides what to do given the dimensions of the sprite.
+ * \brief Model::getDimensionsAndInitializeFirstSprite slot method decides what to do given the dimensions of the sprite.
  * Will set this class' dimension member and and create and initialize the first sprite of this class
  * \param dim
  */
-void Model::getDimensions(int dim)
+void Model::getDimensionsAndInitializeFirstSprite(int dim)
 {
     spriteDimensions = dim;
     scale = spriteDimensions/previewSize;
     // create the first sprite of model
-    sprite = new Sprite(dim);
-    // index of sprite is that of the only sprite we have
-    currentIndexOfSprites = 0;
-    sprites.push_back(sprite);
-
-    setListPreview();
+    createNewSprite();
 }
+
 
 /*!
  * \brief Model::updatePixmap Wrapper method for updating pixmap by adding grid
@@ -72,8 +68,9 @@ void Model::updatePixmap(){
 void Model::updateSprite(double x, double y, QColor color, int thickness)
 {
     // convert 0 -513 x, y to 0 - 3, 15, 31, 63, ... x, y pixle range that corresponds to what was clicked on image
-    int xInPixelSpace =  x*scale;
-    int yInPixelSpace =  y*scale;
+    int xInPixelSpace =  transformCoordToXandYSpriteSpace(x);
+    int yInPixelSpace =  transformCoordToXandYSpriteSpace(y);
+
     // if thickness is 3 set x and y such that they get drawn with middle most pixel being the source pixle with all others being drawn around it
     if(thickness==3){
         xInPixelSpace = xInPixelSpace-1;
@@ -82,12 +79,12 @@ void Model::updateSprite(double x, double y, QColor color, int thickness)
 
     // for loop goes through the thickness and adds pixels based on thickness
     // first for loop loops through y pixel clicked + thickness
-    // second for loop does the same with x
-
     for(int yDependingOnThick = 0; yDependingOnThick<thickness; yDependingOnThick++)
+        // second for loop does the same with x
         for(int xDependingOnThick = 0; xDependingOnThick<thickness;xDependingOnThick++ ){
             int currentXPixel = xInPixelSpace+xDependingOnThick;
             int currentYPixel = yInPixelSpace+yDependingOnThick;
+
             // check that pixel drawn is not out range
             if(currentYPixel >= 0 && currentXPixel >= 0 && currentXPixel<spriteDimensions && currentYPixel<spriteDimensions)
                 sprite->setPixel(currentXPixel,currentYPixel,color);
@@ -105,8 +102,9 @@ void Model::updateSprite(double x, double y, QColor color, int thickness)
 void Model::getCoords(double x, double y){
 
     // 0 - 3, 15, 31, 63 .... pixle range that corresponds to what was clicked on image
-    int xInPixelSpace =  x*scale;
-    int yInPixelSpace =  y*scale;
+    int xInPixelSpace =  transformCoordToXandYSpriteSpace(x);
+    int yInPixelSpace =  transformCoordToXandYSpriteSpace(y);
+
     // send scaled coords to view
     emit sendCoords("x: "+QString::number(xInPixelSpace) + "  y: " + (QString::number(yInPixelSpace)));
 }
@@ -116,19 +114,19 @@ void Model::getCoords(double x, double y){
  * \param canvasSize size of the canvas/preview drawing of sprite
  */
 void Model::makeGrid(int canvasSize){
+    // add grid lines on top of sprite image's pixmap
     QPixmap pixmap(QPixmap::fromImage(sprite->getImage()).scaled(canvasSize, canvasSize, Qt::KeepAspectRatio));
     QPainter painter(&pixmap);
-
+    // use black as the line color
     painter.setPen(QColor(0, 0, 0, 200));
 
-    //vertical lines
-    for(float x = 0; x <= pixmap.width(); x+=pixmap.width()/spriteDimensions){
-        painter.drawLine(x, 0, x, pixmap.height());
-    }
+    // draw vertical and horizontal lines
+    for(float lineIndex = 0; lineIndex <= pixmap.width(); lineIndex+=pixmap.width()/spriteDimensions){
+        //vertical lines
+        painter.drawLine(lineIndex, 0, lineIndex, pixmap.height());
+        //horizontal lines
+        painter.drawLine(0, lineIndex, pixmap.width(), lineIndex);
 
-    //horizontal lines
-    for(float y = 0; y <= pixmap.height(); y+=pixmap.height()/spriteDimensions){
-        painter.drawLine(0, y, pixmap.width(), y);
     }
 
     // send grid to view to draw
@@ -162,6 +160,7 @@ void Model::sendIndexedSprite(){
     if(sprites.length() != 0)
         // send the sprite at which the class member index variable is at as of rn
         emit sendAnimationPreviewPixmap(QPixmap::fromImage(sprites[currentAnimatedSpriteIndex++]->currSprite).scaled(128, 128, Qt::KeepAspectRatio));
+
     // reset the index variable
     if(currentAnimatedSpriteIndex>=sprites.length())
         currentAnimatedSpriteIndex = 0;
@@ -183,8 +182,8 @@ void Model::previewAnimation(){
 void Model::setListPreview(){
     QLabel *temp = new QLabel();
     // set the the label of the temp to the image of the most recent preview of the sprite
-    temp->setPixmap(QPixmap::fromImage(sprite->getImage().scaled(83, 83, Qt::KeepAspectRatio)));
-    emit sendThumbnailLabel(QPixmap::fromImage(sprite->getImage().scaled(83, 83, Qt::KeepAspectRatio)), currentIndexOfSprites);
+    temp->setPixmap(QPixmap::fromImage(sprite->getImage().scaled(prefferedThumbnailSize, prefferedThumbnailSize, Qt::KeepAspectRatio)));
+    emit sendThumbnailLabel(QPixmap::fromImage(sprite->getImage().scaled(prefferedThumbnailSize, prefferedThumbnailSize, Qt::KeepAspectRatio)), currentIndexOfSprites);
 }
 
 /*!
@@ -194,7 +193,7 @@ void Model::setListPreview(){
  */
 void Model::updateAndPaintALl(QColor selected){
     sprite->currSprite.fill(selected);
-    emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
+    emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(prefferedThumbnailSize, prefferedThumbnailSize, Qt::KeepAspectRatio), currentIndexOfSprites);
 }
 
 /*!
@@ -203,7 +202,7 @@ void Model::updateAndPaintALl(QColor selected){
 void Model::clearCurrentSprite(){
     QColor blank(0,0,0,0);
     sprite->currSprite.fill(blank);
-    emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
+    emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(prefferedThumbnailSize, prefferedThumbnailSize, Qt::KeepAspectRatio), currentIndexOfSprites);
 
     updatePixmap();
 }
@@ -215,9 +214,13 @@ void Model::clearCurrentSprite(){
 void Model::write(QJsonObject &json) const
 {
     int currIndex = 0;
+
+    // initialize json member variables to those of this class
     json["height"] = spriteDimensions;
     json["width"] = spriteDimensions;
     json["numberOfFrames"] = sprites.length();
+
+    // go through sprites and convert all x and y and rgb values to arrays and make an array of arrays
     QJsonObject allSprites;
     for(Sprite* s : sprites)
     {
@@ -253,27 +256,33 @@ void Model::read(QJsonObject &json){
     int width = -1;
     int frames = -1;
     QJsonObject test;
+
+    // get height if exists
     if (json.contains("height") && json["height"].isDouble()){
         height = json["height"].toInt();
     }
 
+    // get width if exists
     if (json.contains("width") && json["width"].isDouble()){
         width = json["width"].toInt();
     }
 
+    // check if height and width does not equal
     if (height != width){
+        // tell user about error
         emit errorWhenParsingJsonFile();
         timer->start(1000/fps);
-
-        return; // error message
+        return;
     }
-
+    // json is ready to be read, clear all preexisting layers
     emit clearButtonThumbnails();
 
+    // get numberOfFrames if exists
     if (json.contains("numberOfFrames") && json["numberOfFrames"].isDouble()){
         frames = json["numberOfFrames"].toInt();
     }
 
+    // if json contains frames get it
     if(json.contains("frames"))
     {
         test = json["frames"].toObject();
@@ -281,9 +290,7 @@ void Model::read(QJsonObject &json){
 
 
     currentAnimatedSpriteIndex = 0;
-
-    this->getDimensions(height);
-
+    this->getDimensionsAndInitializeFirstSprite(height);
     sprites.clear();
 
 
@@ -302,14 +309,16 @@ void Model::read(QJsonObject &json){
                 sprite->setPixel(row, col, QColor(red,blue,green,alpha));
             }
         }
+        // update all thumbnails
         sprites.push_back(sprite);
         if(i!=0)
-        emit sendThumbnailLabel(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), i);
+            emit sendThumbnailLabel(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), i);
 
     }
+    // reset sprite to be the first sprite
     sprite = sprites[0];
     currentIndexOfSprites = 0;
-
+    // update current sprite's thumbnail which will be first
     emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
     timer->start(1000/fps);
     updatePixmap();
@@ -321,10 +330,11 @@ void Model::read(QJsonObject &json){
  */
 void Model::save(QString fileName)
 {
+
     write(jsonObj);
     QJsonDocument temp(jsonObj);
     QFile file(fileName);
-
+    // open files and write to them the contents of json
     file.open(QFile::WriteOnly | QFile::Text | QFile::Truncate);
     file.write(temp.toJson(QJsonDocument::Compact));
     file.close();
@@ -336,12 +346,12 @@ void Model::save(QString fileName)
  */
 void Model::open(QString fileName)
 {
-    // NEED prompt for saving before opening a new sprite file
+
     QFile jsonFile(fileName);
     jsonFile.open(QIODevice::ReadOnly | QIODevice::Text);
     QJsonDocument JsonDocument = QJsonDocument::fromJson(jsonFile.readAll());
     jsonFile.close();
-
+    // read from files the json object
     QJsonObject RootObject = JsonDocument.object();
     read(RootObject);
 }
@@ -351,6 +361,7 @@ void Model::open(QString fileName)
  * \param index index of sprite to change to
  */
 void Model::changeSpriteToIndex(int index){
+    // get whatever sprite is at the index and update method variables accordingly
     currentIndexOfSprites = index;
     sprite = sprites[index];
     updatePixmap();
@@ -365,13 +376,24 @@ void Model::changeSpriteToIndex(int index){
  */
 void Model::paintSprite(int x, int y, const QColor& color)
 {
-    int xInPixelSpace =  x*scale;
-    int yInPixelSpace =  y*scale;
+    int xInPixelSpace =  transformCoordToXandYSpriteSpace(x);
+    int yInPixelSpace =  transformCoordToXandYSpriteSpace(y);
+
+    // check if color of paint bucket pixel is not same, if same do not bucket, if isnt paint bucket
     if(sprite->getPixel(xInPixelSpace, yInPixelSpace) != color)
     {
+        // update by calling sprite's paint bucket and emit to update view thumbnails
         sprite->paintBucket(xInPixelSpace, yInPixelSpace, color, sprite->getPixel(xInPixelSpace, yInPixelSpace));
-        emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
+        emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(prefferedThumbnailSize, prefferedThumbnailSize, Qt::KeepAspectRatio), currentIndexOfSprites);
     }
-//    sprite->paintBucket(xInPixelSpace, yInPixelSpace, color, sprite->getPixel(xInPixelSpace, yInPixelSpace));
-//    emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
+}
+
+/*!
+ * \brief Model::transformCoordToXandYSpace method takes relative location on canvas (0 to 513) and turns it to pixel
+ * based locations (0 to 16, 32, etc)
+ * \param xOrY single coordinate to transform
+ * \return location of x or y relative to sprite
+ */
+int Model::transformCoordToXandYSpriteSpace(int xOrY){
+    return xOrY*scale;
 }

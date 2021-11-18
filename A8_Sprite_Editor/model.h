@@ -31,7 +31,7 @@ public:
     explicit Model(QObject *parent = nullptr);
     void runAnimation();
 
-//used with the view
+    //used with the view
 public slots:
     // updates the pixmap
     void updatePixmap();
@@ -40,7 +40,7 @@ public slots:
     // takes in coordinates of mouse relative to gui
     void getCoords(double, double);
     // takes in dimensions and sets them in this class
-    void getDimensions(int);
+    void getDimensionsAndInitializeFirstSprite(int);
     // creates new sprite whenever clicked in view is done
     void createNewSprite();
     // takes in fps and changes this classes fps
@@ -61,9 +61,8 @@ public slots:
     void paintSprite(int,int,const QColor&);
 
 
-//internal model slots
+    //internal model slots
 private slots:
-
 
 signals:
     // send given pixmap of grid to view for canvas
@@ -78,11 +77,10 @@ signals:
     void sendPreviewPixmap(QPixmap);
     // sends the current sprite to the thumbnail to see changes in real time
     void updateCurrentSpriteThumbnail(QPixmap, int);
-
+    // signal that tells view to show error message for json being invalid
     void errorWhenParsingJsonFile();
-
+    // signal letting scroll area know that it should be emptied
     void clearButtonThumbnails();
-
 
 private:
     int fps;
@@ -92,6 +90,7 @@ private:
     int currentIndexOfSprites;
     double previewSize = 513.0;
     int numFrames; // number of sprites
+    int prefferedThumbnailSize = 83;
 
     QJsonObject jsonObj;
     QVector<Sprite*> sprites;
@@ -102,12 +101,13 @@ private:
     void sendIndexedSprite();
 
     void setListPreview();
-        // make grid given canvas size
-        void makeGrid(int);
-        // method writes to given json object
-        void write(QJsonObject &json) const;
-        // method reads from json object and sets this member variable accordingly
-        void read(QJsonObject &json) ;
+    // make grid given canvas size
+    void makeGrid(int);
+    // method writes to given json object
+    void write(QJsonObject &json) const;
+    // method reads from json object and sets this member variable accordingly
+    void read(QJsonObject &json) ;
+    int transformCoordToXandYSpriteSpace(int);
 };
 
 #endif // MODEL_H
