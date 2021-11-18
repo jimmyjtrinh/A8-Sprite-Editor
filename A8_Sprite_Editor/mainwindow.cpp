@@ -335,12 +335,9 @@ void MainWindow::on_pushButton_2_clicked()
 {
     QMessageBox msgBox;
     msgBox.setText("Shortcuts");
-    msgBox.setInformativeText("\ncmd + S \t Save \ncmd + O \t Open \ncmd + Q \t Quit \n"
-                              "E \t Erase \nC \t Color \n\n");
-    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-    // msgBox.setDefaultButton(QMessageBox::Save);
+      msgBox.setInformativeText("\nctrl + S \t Save \nctrl + O \t Open \nctrl + Q \t Quit \nctrl + H \t Help \nctrl + N \t Open new project \n\n");
+    msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.exec();
-    // QMessageBox::information(this,"Message", "You clicked the button", QMessageBox::Ok, QMessageBox::Cancel);
 }
 
 /*!
@@ -426,7 +423,20 @@ void MainWindow::on_actionQuit_triggered()
  */
 void MainWindow::on_actionHelp_triggered()
 {
-    QMessageBox::information(this, "Help", "How to use this program.....");
+    QMessageBox::information(this, "Help", "\n\n- Drawing Tools -\n"
+                                           "Brush Tool - Select to start drawing on the canvas.\n"
+                                           "Eraser Tool - Select to erase.\n"
+                                           "Clear Tool - Select to clear the canvas.\n"
+                                           "Bucket Tool - Select fill a space with color.\n"
+                                           "Color Button - Select to choose colors.\n"
+                                           "Pen Size - Select pen size.\n\n"
+                                           "- Viewing Animations -\n"
+                                           "Animations can be viewed in the top right corner of the program.\n"
+                                           "Use the slider or spinbox underneath to chagne the frames per second that it plays at.\n"
+                                           "New Frame - Press New Frame button to add frames to the animation.\n\n"
+                                           "- Saving and Loading -\n"
+                                           "Use “File” to create a new canvas, open and save a .ssp file.\n\n");
+
 }
 
 /*!
@@ -434,7 +444,10 @@ void MainWindow::on_actionHelp_triggered()
  */
 void MainWindow::on_actionAbout_triggered()
 {
-    QMessageBox::information(this, "About", "This program is created by Jimmy Trinh, Jacob Day, Amitoj Singh, and Mikey Shin");
+    QMessageBox::information(this, "About", "Qt sprite editor program based on C++ created in Qt Creator.\n"
+                                            "This program was created by Jimmy Trinh, Jacob Day, Amitoj Singh, "
+                                            "and Mikey Shin in CS 3505 at the University of Utah.\n"
+                                            "Last edit was on November 18, 2021.");
 
 }
 
