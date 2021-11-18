@@ -268,14 +268,6 @@ void MainWindow::translateButtonNameToNumber(){
      QPushButton * button = qobject_cast<QPushButton*>(sender());
     emit sendIndexOfToBePreviewed(button->objectName().toInt());
 }
-/*!
- * \brief MainWindow::on_paintBucketButton_clicked Defines method that decides how model gets paint bucket request
- */
-void MainWindow::on_paintBucketButton_clicked()
-{
-//    emit paintAll(selectedColor);
-//    emit updateGrid();
-}
 
 /*!
  * \brief MainWindow::setMouseTrackingBool sets the mouse tracking of this program to given bool

@@ -53,8 +53,6 @@ private slots:
     void on_speedSlider_valueChanged(int value);
     // event that adds widgets  - model connects to this
     void addWidgetToScrollBar(QPixmap, int);
-    // event that handles what to send to model when paint bucket is selected
-    void on_paintBucketButton_clicked();
     // event that handles when the preview button is selected
     void on_previewActualSizeButton_toggled(bool checked);
     // event that handles when clear is selected
@@ -87,11 +85,11 @@ private slots:
     void on_actionAbout_triggered();
     // toggles paint bucket to on and allows editing
     void on_paintBucketButton_toggled(bool checked);
-
+    // event handler that creates new mainwindow instance
     void on_actionNew_Project_triggered();
-
+    // event handles showing json error
     void handleJsonError();
-
+    // event handles clearing out thumbnail list
     void clearThumbnailList();
 
 private:
