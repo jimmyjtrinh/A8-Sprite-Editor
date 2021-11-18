@@ -47,15 +47,17 @@ public slots:
     void setFps(int);
     // takes given in qcolor and sets all pixels of sprite to color
     void updateAndPaintALl(QColor);
-
+    // will handle and begin previewing cycle
     void previewAnimation();
+    // clear sprite that is held at sprite variable and update view
     void clearCurrentSprite();
+    // save given string file name
     void save(QString);
+    // open given string file name
     void open(QString);
-
     // takes given index and sets current sprite to that one in list
     void changeSpriteToIndex(int);
-
+    // apply paint method at sprite x,y with color
     void paintSprite(int,int,const QColor&);
 
 
@@ -79,6 +81,8 @@ signals:
 
     void errorWhenParsingJsonFile();
 
+    void clearButtonThumbnails();
+
 
 private:
     int fps;
@@ -89,26 +93,21 @@ private:
     double previewSize = 513.0;
     int numFrames; // number of sprites
 
+    QJsonObject jsonObj;
     QVector<Sprite*> sprites;
     Sprite *sprite;
-
     QTimer *timer;
 
     // sends what is currently the sprite that should be previewed in animation loop after doing some work
     void sendIndexedSprite();
 
     void setListPreview();
-    // make grid given canvas size
-    void makeGrid(int);
-
-
-    void write(QJsonObject &json) const;
-    void read(QJsonObject &json) ;
-
-
-    QJsonObject jsonObj;
-
-
+        // make grid given canvas size
+        void makeGrid(int);
+        // method writes to given json object
+        void write(QJsonObject &json) const;
+        // method reads from json object and sets this member variable accordingly
+        void read(QJsonObject &json) ;
 };
 
 #endif // MODEL_H

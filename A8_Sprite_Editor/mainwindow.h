@@ -77,20 +77,22 @@ private slots:
     void on_colorPreviewButton_clicked();
     // takes name of button that is passed in and translates name to number and sends to model
     void translateButtonNameToNumber();
-
+    // takes the nth button in view scroll area and updates to label
     void updateButtonThumbnail(QPixmap,int);
-
+    // define what to do when quit selected
     void on_actionQuit_triggered();
-
+    // define what to do when help selected
     void on_actionHelp_triggered();
-
+    // define what to do when about is pressed
     void on_actionAbout_triggered();
-
+    // toggles paint bucket to on and allows editing
     void on_paintBucketButton_toggled(bool checked);
 
     void on_actionNew_Project_triggered();
 
     void handleJsonError();
+
+    void clearThumbnailList();
 
 private:
     Ui::MainWindow *ui;
@@ -148,12 +150,7 @@ signals:
     void openName(QString);
     // sends the model index of sprite that is wanted to be previewed
     void sendIndexOfToBePreviewed(int);
-
+    // sends the model where paint bucket is to be applied and with what color
     void paintBucket(int, int, const QColor&);
-
-
-
-
-
 };
 #endif // MAINWINDOW_H

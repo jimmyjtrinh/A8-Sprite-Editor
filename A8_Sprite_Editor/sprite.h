@@ -22,15 +22,17 @@ public:
     ~Sprite();
     Sprite(int);
     Sprite(const Sprite&);
-    // set pixel
-    void setPixel(int x, int y, const QColor& color);
+
+
     // image related code
     QImage currSprite;
     QImage getImage();
-
     QColor getPixel(int x, int y);
 
+    // method does paint bucket on pixel
     void paintBucket(int, int, const QColor&);
+    // set pixel
+    void setPixel(int x, int y, const QColor& color);
 
 
 

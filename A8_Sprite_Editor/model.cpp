@@ -268,6 +268,8 @@ void Model::read(QJsonObject &json){
         return; // error message
     }
 
+    emit clearButtonThumbnails();
+
     if (json.contains("numberOfFrames") && json["numberOfFrames"].isDouble()){
         frames = json["numberOfFrames"].toInt();
     }

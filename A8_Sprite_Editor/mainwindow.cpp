@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&modelObj, &Model::sendPreviewPixmap, ui->previewActualSizeLabel, &QLabel::setPixmap);
     connect(&modelObj, &Model::updateCurrentSpriteThumbnail, this, &MainWindow::updateButtonThumbnail);
     connect(&modelObj, &Model::errorWhenParsingJsonFile, this, &MainWindow::handleJsonError);
+    connect(&modelObj, &Model::clearButtonThumbnails, this, &MainWindow::clearThumbnailList);
 
 
     //View to Model
@@ -377,12 +378,15 @@ void MainWindow::on_actionOpen_triggered()
 {
     QString openFile = QFileDialog::getOpenFileName(this, tr("Open Sprite"), "", tr("Sprite (*.ssp)"));
     if(!openFile.isEmpty()){
-        boxLayout =  new QVBoxLayout();
-          container = new QWidget();
-       // previewThumbnails.clear();
-
         emit openName(openFile);
     }
+}
+
+void MainWindow::clearThumbnailList()
+{
+   boxLayout =  new QVBoxLayout();
+   container = new QWidget();
+   previewThumbnails.clear();
 }
 
 /*!
