@@ -25,6 +25,8 @@ public:
 
     QColor getPixel(int x, int y);
 
+    void paintBucket(int, int, const QColor&);
+
 
 
 private:

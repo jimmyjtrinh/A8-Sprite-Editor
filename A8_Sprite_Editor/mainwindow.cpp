@@ -43,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::saveName, &modelObj, &Model::save);
     connect(this, &MainWindow::openName, &modelObj, &Model::open);
     connect(this, &MainWindow::sendIndexOfToBePreviewed, &modelObj, &Model::changeSpriteToIndex);
+    connect(this, &MainWindow::paintBucket, &modelObj, &Model::paintSprite);
 
 
     //Prompt to View
@@ -127,7 +128,15 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
  */
 void MainWindow::updateCanvasDrawing(){
 
-    emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, *currColor, penSize);
+    if(isPainting)
+    {
+        emit(paintBucket(relativeXPosOfImage, relativeYPosOfImage, *currColor));
+    }
+    else
+    {
+        emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, *currColor, penSize);
+    }
+//    emit updatePixel(relativeXPosOfImage, relativeYPosOfImage, *currColor, penSize);
     emit updateGrid();
 }
 
@@ -185,12 +194,18 @@ void MainWindow::on_colorButton_clicked()
  */
 void MainWindow::on_eraserButton_toggled(bool checked)
 {
+
     if (checked){
         currColor = &ERASER; // if button checked, make the color that draws the "eraser" color
     } else {
         // not checked thus eraser button is not active anymore, leave currColor to be the color selected b4 in dialog
         currColor = &selectedColor;
     }
+    if(ui->paintBucketButton->isChecked() && checked)
+    {
+        ui->paintBucketButton->setChecked(false);
+    }
+
 }
 
 /*!
@@ -252,8 +267,8 @@ void MainWindow::translateButtonNameToNumber(){
  */
 void MainWindow::on_paintBucketButton_clicked()
 {
-    emit paintAll(selectedColor);
-    emit updateGrid();
+//    emit paintAll(selectedColor);
+//    emit updateGrid();
 }
 
 /*!
@@ -399,3 +414,10 @@ void MainWindow::on_actionAbout_triggered()
 
 }
 
+
+void MainWindow::on_paintBucketButton_toggled(bool checked)
+{
+    if(ui->eraserButton->isChecked() && checked)
+        ui->eraserButton->setChecked(false);
+    isPainting = checked;
+}

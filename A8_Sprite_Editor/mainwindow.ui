@@ -89,6 +89,9 @@
     <property name="text">
      <string>bucket</string>
     </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QPushButton" name="eraserButton">
     <property name="geometry">
@@ -356,7 +359,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>33</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="nativeMenuBar">

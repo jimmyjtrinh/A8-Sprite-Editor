@@ -81,6 +81,8 @@ private slots:
 
     void on_actionAbout_triggered();
 
+    void on_paintBucketButton_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
     Model modelObj;
@@ -101,6 +103,7 @@ private:
     QColor ERASER;
     QColor backupColor;
 
+    bool isPainting = false;
     // checks if mouse location is on top of canvas
     bool isInCanvas();
     // method wraps all signals that would update canvas
@@ -136,6 +139,8 @@ signals:
     void openName(QString);
     // sends the model index of sprite that is wanted to be previewed
     void sendIndexOfToBePreviewed(int);
+
+    void paintBucket(int, int, const QColor&);
 
 
 

@@ -81,3 +81,22 @@ QColor Sprite::getPixel(int x, int y)
     return currSprite.pixelColor(x, y);
 }
 
+void Sprite::paintBucket(int x, int y, const QColor &color)
+{
+    if(x < 0 || y < 0 || x >= currSprite.width() || y >= currSprite.height())
+    {
+        return;
+    }
+
+    if(currSprite.pixelColor(x,y) != QColor(0,0,0,0))
+    {
+        return;
+    }
+
+    currSprite.setPixelColor(x,y,color);
+    this->paintBucket(x-1, y, color);
+    this->paintBucket(x+1, y, color);
+    this->paintBucket(x, y-1, color);
+    this->paintBucket(x, y+1, color);
+}
+

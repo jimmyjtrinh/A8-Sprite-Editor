@@ -58,6 +58,8 @@ public slots:
     // takes given index and sets current sprite to that one in list
     void changeSpriteToIndex(int);
 
+    void paintSprite(int,int,const QColor&);
+
 
 //internal model slots
 private slots:

@@ -137,6 +137,7 @@ void Model::makeGrid(int canvasSize){
 
     // send grid to view to draw
     emit sendGrid(pixmap);
+
 }
 
 /*!
@@ -346,3 +347,10 @@ void Model::changeSpriteToIndex(int index){
     updatePixmap();
 }
 
+void Model::paintSprite(int x, int y, const QColor& color)
+{
+    int xInPixelSpace =  x*scale;
+    int yInPixelSpace =  y*scale;
+    sprite->paintBucket(xInPixelSpace, yInPixelSpace, color);
+    emit updateCurrentSpriteThumbnail(QPixmap::fromImage(sprite->getImage()).scaled(83, 83, Qt::KeepAspectRatio), currentIndexOfSprites);
+}
