@@ -135,7 +135,7 @@ void MainWindow::updateCanvasDrawing(){
 
     if(isPainting)
     {
-        if(canPaint){
+        if(canPaint){ // Prevents crashing when user drags mouse while using bucket tool.
             canPaint = false;
             emit paintBucket(relativeXPosOfImage, relativeYPosOfImage, *currColor);
         }

@@ -7,13 +7,10 @@
 #define MODEL_H
 
 #include <QObject>
-#include <stdlib.h>
-#include <QQueue>
 #include <QTimer>
 #include <QPixmap>
 #include <QPainter>
 #include "sprite.h"
-#include <QTimer>
 #include <QLabel>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -29,6 +26,8 @@ class Model : public QObject
     Q_OBJECT
 public:
     explicit Model(QObject *parent = nullptr);
+
+    // Updates the animation in the right corner
     void runAnimation();
 
     //used with the view
@@ -59,10 +58,6 @@ public slots:
     void changeSpriteToIndex(int);
     // apply paint method at sprite x,y with color
     void paintSprite(int,int,const QColor&);
-
-
-    //internal model slots
-private slots:
 
 signals:
     // send given pixmap of grid to view for canvas
@@ -99,14 +94,15 @@ private:
 
     // sends what is currently the sprite that should be previewed in animation loop after doing some work
     void sendIndexedSprite();
-
-    void setListPreview();
+    // creates new Qlabel for the thumbnails then updates pixmap
+    void createNewThumbnailPreview();
     // make grid given canvas size
     void makeGrid(int);
     // method writes to given json object
     void write(QJsonObject &json) const;
     // method reads from json object and sets this member variable accordingly
     void read(QJsonObject &json) ;
+    // helper for scaling the x and y coordinates
     int transformCoordToXandYSpriteSpace(int);
 };
 

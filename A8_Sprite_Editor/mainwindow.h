@@ -112,9 +112,11 @@ private:
     QColor ERASER;
     QColor backupColor;
 
+    // checks if a brush is being used
     bool isPainting = false;
     // checks if mouse location is on top of canvas
     bool isInCanvas();
+    // checks if it is okay for the bucket to paint
     bool canPaint = true;
     // method wraps all signals that would update canvas
     void updateCanvasDrawing();

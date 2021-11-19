@@ -34,7 +34,7 @@ void Model::createNewSprite(){
     // change preview label to reflect new main sprite
     updatePixmap();
     // call method that will handle thumbnail previews
-    setListPreview();
+    createNewThumbnailPreview();
 }
 
 /*!
@@ -179,7 +179,7 @@ void Model::previewAnimation(){
  * \brief Model::setListPreview method takes the current sprite being worked on and send that sprites image
  * to the view to be shown
  */
-void Model::setListPreview(){
+void Model::createNewThumbnailPreview(){
     QLabel *temp = new QLabel();
     // set the the label of the temp to the image of the most recent preview of the sprite
     temp->setPixmap(QPixmap::fromImage(sprite->getImage().scaled(prefferedThumbnailSize, prefferedThumbnailSize, Qt::KeepAspectRatio)));
