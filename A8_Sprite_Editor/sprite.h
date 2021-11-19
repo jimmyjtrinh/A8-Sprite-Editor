@@ -2,6 +2,9 @@
  * Jimmy Trinh && Jacob Day && Amitoj Singh && Michael Shin
  * Software Practice II, CS 3505
  * A8: Qt Sprite Editor
+ *
+ * VIDEO DEMO LINK:
+ * https://www.youtube.com/watch?v=K606owc6uvY
  */
 #ifndef SPRITE_H
 #define SPRITE_H
